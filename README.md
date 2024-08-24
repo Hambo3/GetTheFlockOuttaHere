@@ -1,6 +1,6 @@
 # Get The Flock Outta Here
 
-A game for js13k 2023  
+A game for js13k 2024 
 
 
 ## Gameplay
