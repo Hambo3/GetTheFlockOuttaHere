@@ -4,9 +4,9 @@ A game for js13k 2024
 
 
 ## Gameplay
-WAD Arrows to move
-SPACE to perform action
-Mobile touch controls
+WAD Arrows to move 
+SPACE to perform action 
+Mobile touch controls 
 
 ### General
 
