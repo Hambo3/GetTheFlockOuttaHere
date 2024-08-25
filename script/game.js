@@ -371,12 +371,12 @@ class Game{
 
             if(this.mapId==2){
                 var p = this.O.Get([6]).length;                
-                var b = p>11?'A 2 SHEEP':p>6?'A 1 SHEEP':'NO';
+                var b = p>11?' 2 EXTRA SHEEP':p>6?' A SHEEP':'NO SHEEP';
                 this.bonuspt = p>11?2:p>6?1:0;
                 this.simpTxt = [
-                    {s:'WE HAVE '+p+' LOVELY FLOWERS. YOU EARNED '+b+' BONUS'},
-                    {s:'SCORE ' +s+ 'SHEEP X '+p+' = '+((p*10)*s)}];
-                    this.score += ((p*10)*s);
+                    {s:'WE HAVE '+p+' LOVELY FLOWERS. YOU EARNED '+b},
+                    {s:'BONUS',ns:s,ex:p,v:10}];
+                    this.score += (s*p*10);
             }
             if(this.mapId==3){
                 if(this.lvlTm.enabled){
@@ -391,7 +391,7 @@ class Game{
                         {s:'WERE SO SORRY, HERES YOUR PUMPKINS BACK'}
                     ];
                     this.simpTxt.push({s:'AND '+b+' SHEEP WE NICKED'});
-                    this.simpTxt.push({s:'SCORE ' +s+ 'SHEEP X 100 = '+(100*s)});
+                    this.simpTxt.push({s:'BONUS',ns:s,ex:0,v:100});
                     this.score += (100*s);
                 }
                 else{
@@ -407,7 +407,7 @@ class Game{
                 this.simpTxt = [
                     {s:'YOU MADE IT HOME. ENJOY 2 EXTRA SHEEP'}
                 ];
-                this.simpTxt.push({s:'SCORE ' +s+ 'SHEEP X 100 = '+(100*s)});
+                this.simpTxt.push({s:'BONUS',ns:s,ex:0,v:100});
                 this.score += (100*s);
             }
 
@@ -861,25 +861,25 @@ this.player.action = 1;//C.DIR.DOWN;
                     var b = Factory.Head(p.c, p.d);
                     SFX.Polygon(16, 30, b.src, b.col, {x:.8,y:.8,z:1.6}, 0);
                     SFX.Text(this.score,440,10,4,0,"#fff");  
-                    //if(this.mapId==1 && this.M == 1){
-                        var b = Factory.Sheep(9);//C.col.sheep
-                        var g = this.mapId==1 ? {s:b[1][0].src, c:b[1][0].col} 
-                                                : {s:assets.tree2, c:12};
+                    
+                    var b = Factory.Sheep(9);//C.col.sheep
+                    var g = this.mapId==1 ? {s:b[1][0].src, c:b[1][0].col} 
+                                            : {s:assets.tree2, c:12};
 
-                        var shp = this.O.All([this.mapId==1?1:6]);//C.ASSETS.SHEEP or PLANT
-                        var p = 48;
-                        for (let i = 0; i < shp.length; i++) {
-                            if(shp[i].found){
-                                var sz = 0.5*shp[i].size.x;
-                                SFX.Polygon(p, 30, g.s, g.c, {x:sz,y:sz,z:sz}, 0);
-                                if(!shp[i].enabled || !shp[i].follow){
-                                    SFX.Polygon(p, 30, assets.x, 
-                                        !shp[i].enabled ? 3 : 0, {x:sz,y:sz,z:sz}, 0);//C.col.red
-                                }
-                                p+=16;
+                    var shp = this.O.All([this.mapId==1?1:6]);//C.ASSETS.SHEEP or PLANT
+                    var p = 48;
+                    for (let i = 0; i < shp.length; i++) {
+                        if(shp[i].found){
+                            var sz = 0.5*shp[i].size.x;
+                            SFX.Polygon(p, 30, g.s, g.c, {x:sz,y:sz,z:sz}, 0);
+                            if(!shp[i].enabled || !shp[i].follow){
+                                SFX.Polygon(p, 30, assets.x, 
+                                    !shp[i].enabled ? 3 : 0, {x:sz,y:sz,z:sz}, 0);//C.col.red
                             }
+                            p+=16;
                         }
-                    //}
+                    }
+                    
 
                 }
                 if(this.lvlTm){
@@ -902,7 +902,30 @@ this.player.action = 1;//C.DIR.DOWN;
                         if(this.bonusn){
                             SFX.Text(this.bonusn, 100,50, 4,0,'#dd0', 600);
                         }
-                        SFX.Text(e.s, 100,80, 5,0,'#ff0', 600);
+                        if(e.ns){
+                            var t=e.ns;
+                            var x = 220;
+                            SFX.Text(e.s, 300,200, 7,0,'#ff0', 600);
+
+                            SFX.Text(e.ns, x,260, 6,0,'#ff0', 600);
+                            x+=40;
+                            var b = Factory.Sheep(9);//C.col.sheep
+                            SFX.Polygon(x, 292, b[1][0].src, b[1][0].col, {x:1.2,y:1.2,z:1.2}, 0);
+                            x+=40;
+                            
+                            if(e.ex){
+                                t*=e.ex;
+                                SFX.Text('X'+e.ex, x,260, 6,0,'#ff0', 600);x+=40;
+       
+                                SFX.Polygon(x, 292, assets.tree2, 12, {x:.8,y:.8,z:.8}, 0);
+                                x+=40;
+                            }
+                            t*=e.v;
+                            SFX.Text('X '+e.v+' = '+t, x,260, 6,0,'#ff0', 600);x+=40;
+                        }
+                        else{
+                            SFX.Text(e.s, 100,80, 5,0,'#ff0', 600);
+                        }
                     }else{
                         var a = Actors[this.plrselect];
                         var h = Factory.Head(a.c, a.d);
