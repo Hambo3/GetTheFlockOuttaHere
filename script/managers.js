@@ -1,6 +1,6 @@
 class MapManger{
 
-    constructor(ctx, md){
+    constructor(ctx){
         this.tileset = [
             {t:assets.tile,c:0}, 
             {t:assets.tile,c:10},//edge
@@ -11,8 +11,8 @@ class MapManger{
             {t:assets.tile,c:2},//h
             {t:assets.tile,c:10}, //dkg
             {t:assets.tile,c:11} 
-            
         ];
+        
         this.offset = new Vector2();
 
         
@@ -49,25 +49,20 @@ class MapManger{
     }
 
     Init(){
-        var p;
-        var col = this.area.x;
-        var row = this.area.y;
         var h = this.tileSize/2;
 
-        this.rend.Box(0,0,this.mapSize.x,this.mapSize.y, PAL[2+14]);
+        this.rend.Box(0,0,this.mapSize.x,this.mapSize.y, PAL[16]);
 
-        for(var r = 0; r < row; r++) 
+        for(var r = 0; r < this.area.y; r++) 
         {
-            for(var c = 0; c < col; c++) 
-            {
-                p = this.mapData[r][c];                
+            for(var c = 0; c < this.area.x; c++) 
+            {            
                 var pt = Util.IsoPoint((c * this.tileSize)+h, (r * this.tileSize)+h); 
-                var t =this.tileset[p];
                 this.rend.Polygon(
                     pt.x,
                     pt.y,
-                    t.t,
-                    t.c, {x:1,y:1,z:1},1); 
+                    this.tileset[this.mapData[r][c]].t,
+                    this.tileset[this.mapData[r][c]].c, {x:1,y:1,z:1},1); 
              }
         }
     }
@@ -78,11 +73,6 @@ class MapManger{
             l:this.offset.x, 
             r:this.offset.x+(this.screenSize.x*this.scale),
             m:this.offset.x+((this.screenSize.x*this.scale)/2)};
-        // return {t:this.offset.y-32,
-        //     b:this.offset.y+(this.screenSize.y*this.scale)+64,
-        //     l:this.offset.x-32, 
-        //     r:this.offset.x+(this.screenSize.x*this.scale)+32,
-        //     m:this.offset.x+((this.screenSize.x*this.scale)/2)};
     }
     
     SetScale(){
@@ -101,13 +91,13 @@ class MapManger{
         }
     }
 
-    MaxZoom(){
-        this.scale = this.maxScale;
-    }
+    // MaxZoom(){
+    //     this.scale = this.maxScale;
+    // }
 
-    MinZoom(){
-        this.scale = this.minScale;
-    }
+    // MinZoom(){
+    //     this.scale = this.minScale;
+    // }
 
     ScrollTo(target, lerp){
         var pt = Util.IsoPoint(target.x, target.y);
@@ -146,8 +136,6 @@ class MapManger{
 
     ScreenBounds(){
         var sc = this.screenSize.Clone();
-        //sc.Multiply(this.scale);
-        //sc.Add(this.offset);
         return {Min:this.offset, Max:sc};
     }
 
@@ -162,16 +150,6 @@ class MapManger{
             0, 0, sc.x, sc.y
         );
 
-        // if(this.hasOverlay){
-        //     this.osCanvasOverlay.ctx.clearRect(0, 0, this.mapSize.x, this.mapSize.y);
-        //     this.osCanvasOverlay.ctx.drawImage
-        //     (
-        //         this.overlayCanvas.canvas, 
-        //         this.offset.x, this.offset.y, sc.x, sc.y,
-        //         0, 0, sc.x, sc.y
-        //     );
-        // }
-
         return this.offset;
     }
     
@@ -185,14 +163,6 @@ class MapManger{
             0, 0, sc.x, sc.y,
             0, 0, this.screenSize.x, this.screenSize.y
         );
-        // if(this.hasOverlay){
-        //     this.screenCtx.drawImage
-        //     (
-        //         this.osCanvasOverlay.canvas, 
-        //         0, 0, sc.x, sc.y,
-        //         0, 0, this.screenSize.x, this.screenSize.y
-        //     );
-        // }
     }
 
     Content(pos){
@@ -276,7 +246,7 @@ class Render{
     Text(str, xs, ys, size, sc, col, bx) {
 
         str = !isNaN(str) ? ""+str : str;
-        this.ctx.fillStyle = col || '#000';
+        this.ctx.fillStyle = col || '#fff';
 
         var cr = xs;
         var blockSize = new Vector2(0,0);

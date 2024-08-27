@@ -173,7 +173,7 @@ var Util = {
     },
     IsoPoint: function(x, y)
     {
-        return new Vector2((x - (y * (1-ISO))), ((y + (x * (1-ISO)))*ISO));
+        return new Vector2((x - (y * (1-.85))), ((y + (x * (1-.85)))*.85));
     }
 }
 

@@ -53,14 +53,12 @@ class TouchPad extends KeyInput{
             e.preventDefault();
             if (e.touches) {
                 var rect = canvas.getBoundingClientRect(); // abs. size of element
-                var scaleX = canvas.width / rect.width;    // relationship bitmap vs. element for x
-                var scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for y
                 m.press = [];
                 for (var i = 0; i < e.touches.length; i++) {
                     var touch = e.touches[i];
                     m.press.push({e:1,
-                        x:Math.round((touch.pageX - rect.left)*scaleX),
-                        y:Math.round((touch.pageY - rect.top)*scaleY)});
+                        x:Math.round((touch.pageX - rect.left)*(canvas.width / rect.width)),
+                        y:Math.round((touch.pageY - rect.top)*(canvas.height / rect.height))});
                 }
                 
             } 
@@ -110,9 +108,8 @@ class TouchPad extends KeyInput{
         for (var i = 0; i < this.press.length; i++) {
             var p = this.press[i];
             var z = this.zones[indx];
-            var dist = Math.sqrt( ((p.x-(132+z.x)) * (p.x-(132+z.x)))
-                                +((p.y-(500+z.y)) * (p.y-(500+z.y))) );
-            return (dist < 16 + z.r);
+            
+            return (Math.sqrt( ((p.x-(132+z.x)) * (p.x-(132+z.x)))+((p.y-(500+z.y)) * (p.y-(500+z.y))) ) < 16 + z.r);
         } 
         return 0;
     }

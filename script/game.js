@@ -78,10 +78,10 @@ class Game{
         
         for (let i = 0; i < mapDef.tr; i++) {	
             var x = Util.RndI(o+1,cols);		
-            var y = Util.RndI(1,rows);
+            var y = Util.RndI(1,rows-1);
             var t = Util.RndI(2,5);
-            if(t==2 && (data[y][x-1] || data[y+1][x]) == 2) t = 5;
-            if(t==3 && (data[y][x-1] || data[y+1][x]) == 3) t = 6;
+            if(t==2 && (data[y][x-1] == 2 || data[y+1][x] == 2)) t = 5;
+            if(t==3 && (data[y][x-1] == 3 || data[y+1][x] == 3)) t = 6;
             data[y][x]=t;
         }
     
@@ -219,7 +219,7 @@ class Game{
                 x += (i%2)*1.3;
                 var p = new Vector2(
                             map.start.x-x, 
-                            map.start.y-y-6)
+                            map.start.y-y-8)
                             .Add(0.5).Multiply(32);
 
                 obj.push(this.Trany(p, {pos:new Vector2((map.end.x)*32, map.end.y*32)}, 60,90));
@@ -381,7 +381,7 @@ class Game{
             if(this.mapId==3){
                 if(this.lvlTm.enabled){
                     var b = this.lvlTm.time>15?'THESE':this.lvlTm.time>0?'THIS':'';
-                    this.bonuspt = this.lvlTm.time>15?2:this.lvlTm.time>0?1:0;
+                    this.bonuspt = this.lvlTm.time>10?2:this.lvlTm.time>0?1:0;
                     this.simpTxt = [
                         {p:'CAUGHT YOU FINALLY'},
                         {s:'YOU WILL NEVER TAKE US ALIVE'},
@@ -517,7 +517,7 @@ class Game{
         var ttt = [];
         if(tx.length) ttt.push({t:4, p: this.bonusp, tx:tx.join()+' WAS LOST.'});
         if(lb.length) ttt.push({t:4, p: this.bonusp, tx:lb.join()+' WAS LEFT BEHIND.'});
-        if(bonus && this.bonusp){
+        if(bonus && this.bonuspt){
             ttt.push({t:4, p: this.bonusp, tx:bs.join()+' WAS ADDED.'});
         }
 
@@ -616,10 +616,10 @@ class Game{
     {
 
         //shut that infernal racket
-if(Input.IsSingle('q') ) {
-    MUSIC.Stop(1);	
-    this.plays=3;
-}
+// if(Input.IsSingle('q') ) {
+//     MUSIC.Stop(1);	
+//     this.plays=3;
+// }
 
         MUSIC.Update(dt);
 
@@ -801,11 +801,11 @@ this.player.action = 1;//C.DIR.DOWN;
         //     || this.M == C.MODE.WIN || this.M == C.MODE.LOSE
         //     || this.M == C.MODE.WON || this.M == C.MODE.LOST
         //     || this.M == C.MODE.SIMP){
-        if(this.M == 1 || this.M == 2 
-            || this.M == 0
-            || this.M == 3 || this.M == 5
-            || this.M == 4 || this.M == 6
-            || this.M == 7){
+        // if(this.M == 1 || this.M == 2 
+        //     || this.M == 0
+        //     || this.M == 3 || this.M == 5
+        //     || this.M == 4 || this.M == 6
+        //     || this.M == 7){
             var bodies = this.O.Get();
 
             bodies.sort(function(a, b){
@@ -852,15 +852,15 @@ this.player.action = 1;//C.DIR.DOWN;
             
             //var shp = this.O.All([1]);//C.ASSETS.SHEEP
             //if(this.M == C.MODE.GAME || this.M == C.MODE.SIMP){
-            if(this.M == 1 || this.M == 7){
+            if(this.M != 0 && this.M != 2){//this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6 || this.M == 7){
                 
-                if(this.M == 1){
+                if(this.M != 7){//this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6){
                     
                     SFX.Box(0,0, 800, 40 ,"rgba(0,0,0,0.6)");
                     var p = Actors[this.plrselect];
                     var b = Factory.Head(p.c, p.d);
                     SFX.Polygon(16, 30, b.src, b.col, {x:.8,y:.8,z:1.6}, 0);
-                    SFX.Text(this.score,440,10,4,0,"#fff");  
+                    SFX.Text(this.score,440,10,4,0);  
                     
                     var b = Factory.Sheep(9);//C.col.sheep
                     var g = this.mapId==1 ? {s:b[1][0].src, c:b[1][0].col} 
@@ -879,7 +879,6 @@ this.player.action = 1;//C.DIR.DOWN;
                             p+=16;
                         }
                     }
-                    
 
                 }
                 if(this.lvlTm){
@@ -908,14 +907,14 @@ this.player.action = 1;//C.DIR.DOWN;
                             SFX.Text(e.s, 300,200, 7,0,'#ff0', 600);
 
                             SFX.Text(e.ns, x,260, 6,0,'#ff0', 600);
-                            x+=40;
+                            x+=66;
                             var b = Factory.Sheep(9);//C.col.sheep
                             SFX.Polygon(x, 292, b[1][0].src, b[1][0].col, {x:1.2,y:1.2,z:1.2}, 0);
                             x+=40;
                             
                             if(e.ex){
                                 t*=e.ex;
-                                SFX.Text('X'+e.ex, x,260, 6,0,'#ff0', 600);x+=40;
+                                SFX.Text('X '+e.ex, x,260, 6,0,'#ff0', 600);x+=100;
        
                                 SFX.Polygon(x, 292, assets.tree2, 12, {x:.8,y:.8,z:.8}, 0);
                                 x+=40;
@@ -934,7 +933,7 @@ this.player.action = 1;//C.DIR.DOWN;
                         SFX.Text(e.p, 100,80, 5,0,'#0ff', 700);
                     }
 
-                    SFX.Text(this.btn,280,560,4,0,PAL[0]);
+                    SFX.Text(this.btn,280,560,4,0);
                 }
             }
 
@@ -946,14 +945,14 @@ this.player.action = 1;//C.DIR.DOWN;
 
                 if(this.mapId==1 && this.plays>2)
                 {
-                    SFX.Text(this.btn+" TO SKIP",280,560,4,0,PAL[0]);
+                    SFX.Text(this.btn+" TO SKIP",280,560,4,0);
                 }
             }
-        }
+        //}
 
         //if(this.M == C.MODE.WIN || this.M == C.MODE.WON){
         if(this.M == 3 || this.M == 4){
-            MAP.PostRender();
+            //MAP.PostRender();
             
             this.BG(0, 0.6, this.bg);
             var shp = this.O.All([1]);
@@ -969,7 +968,7 @@ this.player.action = 1;//C.DIR.DOWN;
             SFX.Text("YOU SAVED " +f+" SHEEP",200,y+80,3,0,c); 
             SFX.Text(d+" WAS LOST",200,y+110,3,0,c); 
             if(l)SFX.Text("AND " +l+" WAS NEVER FOUND",200,y+140,3,0,c); 
-            SFX.Text("SCORE "+this.score,200,y+180,3,0,c); 
+            SFX.Text("SCORE "+this.score,200,y+190,6,0,c); 
 
             if(this.M == 4){//C.MODE.WON
                 var c= this.creds;
@@ -979,64 +978,65 @@ this.player.action = 1;//C.DIR.DOWN;
                     SFX.Text(c[i].b.replace('{p}', this.player.name), 500, y+c[i].y+(i*30),4,1,c); 
                 }
                 
-                SFX.Text(this.btn,280,560,4,0,PAL[0]); 
+                SFX.Text(this.btn,280,560,4,0); 
             } 
         }
         //if(this.M == C.MODE.LOST || this.M == C.MODE.LOSE){
         if(this.M == 6 || this.M == 5){
-            MAP.PostRender();
+            //MAP.PostRender();
 
             this.BG(0, 0.6, this.bg);
             var shp = this.O.All([1]);
             var f = shp.filter(l => l.enabled && l.follow).length;
 
             var t = f<4?0:f<7?1:2;
-            LOSS[t].forEach((s, i) => {
-                SFX.Text(s.replace('{p}', this.player.name),200, 200+(i*30),4,1,PAL[5]);//C.col.title
-            });
+            var tx = ["SOME HERO YOU ARE!|TRY AGAIN BUT BETTER.",
+            "YOU HAVE LOST THE TRUST|OF OUR SHEEP.",
+            "TRY AGAIN {p}|THE SHEEP NEED YOU."
+            ];
+
+            SFX.Text(tx[t].replace('{p}', this.player.name),200, 230,4,1,PAL[5]);//C.col.title
 
             if(this.M == 6){//C.MODE.LOST
-                SFX.Text(this.btn,280,560,4,0,PAL[0]);                  
+                SFX.Text(this.btn,280,560,4,0);                  
             }
         }
         if(this.M == 0){//C.MODE.TITLE
 
 
             this.BG(1, 0.6, this.titlebgc);
-
+            
             if(this.titlesct){
                 var t = 6;
-                SFX.Text("PLAYER",300,60,t,1,PAL[0]); 
-                SFX.Text("SELECT",300,120,t,1,PAL[0]); 
+                SFX.Text("PLAYER",300,60,t,1); 
+                SFX.Text("SELECT",300,120,t,1); 
                 var p = Actors[this.plrselect];
                 var b = Factory.Man(p.c, p.d);
                 SFX.Polygon(400, 440, b[1][0].src, b[1][0].col, {x:3,y:3,z:4.5}, 0);
-                SFX.Text(p.n,360,200,4,0,PAL[0]);
-                if(p.g)SFX.Text(p.g,360,226,2,0,PAL[0]);
-                SFX.Text("LEFT",200,310,4,0,PAL[0]);
-                SFX.Text("RIGHT",520,310,4,0,PAL[0]);
+                SFX.Text(p.n,360,200,4,0);
+                if(p.g)SFX.Text(p.g,360,226,2,0);
+                SFX.Text("LEFT",200,310,4,0);
+                SFX.Text("RIGHT",520,310,4,0);
 
                 if(!this.mob){
-                    SFX.Text("MOVE                  ACTION",200,460,4,0,PAL[0]);
-                    SFX.Text("  W", 200,486,3,0,PAL[0]); 
-                    SFX.Text("A S D / ARROWS                SPACE",200,504,3,0,PAL[0]);                         
+                    SFX.Text("MOVE                  ACTION",200,460,4,0);
+                    SFX.Text("W", 220,486,3,0); 
+                    SFX.Text("A S D / ARROWS                SPACE",200,504,3,0);                         
                 }
             }
             else{
-                var d = MAP.ScreenBounds();
-                var y = (d.Max.y/2);
-                var x = (d.Max.x/2);            
+                var d = MAP.ScreenBounds();        
                 for (var i = 0; i < this.introText.length; i++) {
                     var sc = Util.Remap(this.introText[i].timer.start,0, 0, 1, this.introText[i].timer.time);
                     var m = this.introText[i].text.Size.Clone().Multiply(Easing.eInOutE(sc)*2);
-                    SFX.Image(this.introText[i].text.TextImg, new Vector2(x-(m.x/2), y-(m.y/2)+this.introText[i].y), m, 
+                    SFX.Image(this.introText[i].text.TextImg, new Vector2((d.Max.x/2)-(m.x/2), (d.Max.y/2)-(m.y/2)+this.introText[i].y), m, 
                             {x:0,y:0}, this.introText[i].text.Size);
                 }
 
             }
 
             if(this.titlebgc>1){
-                SFX.Text(this.btn+" TO START",280,560,4,0,PAL[0]);   
+                SFX.Text(this.btn+" TO START",280,560,4,0);   
             }
         }
 
@@ -1044,13 +1044,8 @@ this.player.action = 1;//C.DIR.DOWN;
             SFX.Box(0,0, 800, 608 ,"rgba(100,100,100,0.6)");
 
             SFX.Box(300,200, 270, 100 ,"rgba(0,0,0,0.6)");
-            var a = Actors[this.plrselect];
-            var h = Factory.Head(a.c, a.d);
-            SFX.Polygon(380, 270, h.src, h.col, {x:2,y:2,z:4}, 0);
-            var b = Factory.Sheep(9);//C.col.sheep
-            SFX.Polygon(480, 270, b[1][0].src, b[1][0].col, {x:1.5,y:1.5,z:1.5}, 0);
-            SFX.Text("[ESC] QUIT",320,280,2,0,"#fff");  
-            SFX.Text(this.btn+" CONTINUE",420,280,2,0,"#fff");  
+            SFX.Text("PAUSED",390,230,4,0);
+            SFX.Text("[ESC] QUIT     "+this.btn+" CONTINUE",320,280,2,0);   
         }
 
         Input.Render();

@@ -1,44 +1,5 @@
 //factory
-var ISO = 0.85;
 
-//var C = {   
-    // MODE:{
-    //     TITLE:0,
-    //     GAME:1,
-    //     GINTRO:2,
-    //     WIN:3,
-    //     WON:4,        
-    //     LOSE:5,
-    //     LOST:6,
-    //     SIMP:7
-    // },
-    // col:{
-    //     title:5,  
-    //     shadow:4,
-    //     tree:6,
-    //     splash:5,
-    //     red:3,
-    //     sheep:9,
-    //     hat:8
-    //}//, 
-    // ASSETS:{
-    //     PLAYER:0,
-    //     SHEEP:1,
-    //     PPL:2,
-    //     TREE:3,
-    //     GRUNT:4,
-    //     SPLASH:5,
-    //      PLANT:6,
-    //        THIEF:7
-    //      TRANY:8
-    //}//,    
-    // DIR:{
-    //     UP:0,
-    //     DOWN:1,
-    //     LEFT:2,
-    //     RIGHT:3
-    //}
-//}
 
 var converations = [
     [
@@ -125,8 +86,8 @@ var DEF = {
             world:{width:100, height:48,off:8},
             start:{x:12, y:20,v:0},
             rshp:0,
-            tr:110,
-            fr:12,
+            tr:114,
+            fr:14,
             tme:45,
             simp:[
                 {x:24, y:18},
@@ -138,7 +99,7 @@ var DEF = {
         },
         {   //tranies lvl 4
             world:{width:48, height:100,off:10},
-            start:{x:28, y:10,v:2},
+            start:{x:28, y:12,v:2},
             rshp:0,
             tr:70,
             fr:16,
@@ -165,7 +126,7 @@ var Supporting=[
         d:{l:1.2,f:1.1,h:1.1,b:0,m:3,w:1,t:0}
     },
     {
-        n:'RAJESH',
+        n:'R',
         c:[0,4,2,2,0,1],
         d:{l:1.3,f:1.3,h:1.1,b:0,m:3,w:1,t:0}
     }
@@ -229,7 +190,7 @@ var Actors = [
     {
         n:"MARCIE",
         c:[1,4,0,3,1,2],
-        d:{l:1.3,f:.7,h:1,b:1,m:2,w:2,t:0},
+        d:{l:1.3,f:1.2,h:1.2,b:1,m:2,w:2,t:0},
         call:["HI BIG BOY"]
     },
     {
@@ -428,9 +389,9 @@ var sfeature = [
     [7,7,7,7,7,7,7,7,7,7,7,7,7]
 ],
 [
-[4,7,7,7,7,7,4],//sheep pen
-[4,7,7,7,7,7,4],
-[4,7,7,7,7,7,4],
+[4,7,7,7,7,4,7],//sheep pen
+[7,7,7,7,7,7,4],
+[4,7,7,7,7,7,7],
 [4,7,7,7,7,7,4],
 [0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0]
@@ -475,29 +436,21 @@ var rfeature = [
 ]
 ];
 
-var LOSS = [
-["SOME HERO YOU ARE!","|TRY AGAIN BUT BETTER."],
-["TRY AGAIN {p}","|THE SHEEP COMMUNITY","|NEEDS YOU."],
-["THE SHEEP COMMUNITY",
-"COMMENDS YOU. BUT THIS TIME",
-"YOU WHERE UNSUCCESSFUL.",
-"|THEY NEED YOU {p}."
-]
-];
+
 var COLS =[
     [2],//grass1
-    [1+14,1+21],//water
-    [3+14,3+21],//hole
-    [6+35],//red
-    [0+35],//shadow
-    [1+14,1+7,1],//splash
-    [2+7,2,2+14,2+21, 3 ,3+7],//tree
+    [15,22],//water
+    [17,24],//hole
+    [41],//red
+    [35],//shadow
+    [15,8,1],//splash
+    [9,2,16,23, 3 ,10],//tree
     [5],//titles
-    [0+35,0+35,0+21,0+28],//hat
-    [0,0+7,0+14,0+28,0+28,0+35],//sheep
-    [2+7],//grass2
-    [2+14],//grass2
-    [6+7,6,6+14,6+21, 2+28 ,2+35],//flower
+    [35,35,21,28],//hat
+    [0,7,14,28,28,35],//sheep
+    [9],//grass2
+    [16],//grass2
+    [13,6,20,27, 30 ,37]//flower
 ];
 var PAL =[
     //grey  blue  green  brown  flesh   yellw   red   

@@ -135,7 +135,7 @@ class Dood extends GameObjectBase {
     constructor(pos, type)
     {
         super(pos, type);  
-        this.j = 32; 
+        //this.j = 32; 
         this.mtype = 0;
         this.maxJumpHt=0;
         this.jumpHt = 0;
@@ -173,7 +173,7 @@ class Dood extends GameObjectBase {
     }
     Hopping(dt, d){
         if(this.jumpHt > 0){            
-            this.z = Util.Arc(this.zd,this.j,this.jumpHt); 
+            this.z = Util.Arc(this.zd, 32, this.jumpHt); 
             this.zd-=(this.zV*dt);
             if(this.zd<0){
                 this.z=0;
@@ -191,7 +191,7 @@ class Dood extends GameObjectBase {
             if(d.up||d.down||d.left||d.right)
             {
                 this.jumpHt = this.maxJumpHt;
-                this.zd = this.j;
+                this.zd = 32;
             }
 
             this.Point(d);           
