@@ -2,15 +2,15 @@ class MapManger{
 
     constructor(ctx){
         this.tileset = [
-            {t:assets.tile,c:0}, 
-            {t:assets.tile,c:10},//edge
-            {t:assets.tileh,c:1},//we
-            {t:assets.tileh,c:2},//he
-            {t:assets.tile,c:10},//treebase
-            {t:assets.tile,c:1},//w
-            {t:assets.tile,c:2},//h
-            {t:assets.tile,c:10}, //dkg
-            {t:assets.tile,c:11} 
+            {t:assetstile,c:0}, 
+            {t:assetstile,c:10},//edge
+            {t:assetstileh,c:1},//we
+            {t:assetstileh,c:2},//he
+            {t:assetstile,c:10},//treebase
+            {t:assetstile,c:1},//w
+            {t:assetstile,c:2},//h
+            {t:assetstile,c:10}, //dkg
+            {t:assetstile,c:11} 
         ];
         
         this.offset = new Vector2();

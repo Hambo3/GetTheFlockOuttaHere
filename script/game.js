@@ -143,7 +143,7 @@ class Game{
                     var sz = Util.Rnd(1)+0.8;
                     obj.push(
                         new Grunt(new Vector2((c*32)+16, (r*32)+16),
-                        [[{src:Util.OneOf([assets.tree1,assets.tree2]), col:6}]],//C.col.tree
+                        [[{src:Util.OneOf([assetstree1,assetstree2]), col:6}]],//C.col.tree
                         3,{x:sz,y:sz,z:sz},0,0));
                 }
             }
@@ -156,7 +156,7 @@ class Game{
                     this.plots[i].a=1;
                     obj.push(    
                         new Grunt(this.plots[i].p,
-                            [[{src:assets.tree2, col:12}]],//C.col.tree
+                            [[{src:assetstree2, col:12}]],//C.col.tree
                             6, {x:0.5,y:0.5,z:0.5},0,this.plots[i].i, 1
                         ));                       
                 }
@@ -570,7 +570,7 @@ class Game{
     Splash(pos){
         for(var i=0;i<16;i++){    
             var b = new Grunt(new Vector2(pos.x+Util.Rnd(16), pos.y+Util.Rnd(16)),
-                        [[{src:assets.block, col:5}]],//C.col.splash
+                        [[{src:assetsblock, col:5}]],//C.col.splash
                         5,//C.ASSETS.SPLASH,
                         {x:0.2,y:0.2,z:0.2},
                         new Vector2(Util.Rnd(64)-32, Util.Rnd(64)-32));
@@ -600,7 +600,7 @@ class Game{
         if(f){
             f.a=1;
             var g = new Grunt(new Vector2(p.x+(a==2?-16:a==3?16:0), p.y+(a==0?-16:a==1?16:0)),
-                [[{src:assets.tree2, col:12}]],//C.col.tree);
+                [[{src:assetstree2, col:12}]],//C.col.tree);
                 6,{x:0.5,y:0.5,z:0.5},0, f.i,1);
             this.O.Add(g); 
             this.Score(10, g.pos);            
@@ -852,9 +852,9 @@ this.player.action = 1;//C.DIR.DOWN;
             
             //var shp = this.O.All([1]);//C.ASSETS.SHEEP
             //if(this.M == C.MODE.GAME || this.M == C.MODE.SIMP){
-            if(this.M != 0 && this.M != 2){//this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6 || this.M == 7){
+            if(this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6 || this.M == 7){
                 
-                if(this.M != 7){//this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6){
+                if(this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6){
                     
                     SFX.Box(0,0, 800, 40 ,"rgba(0,0,0,0.6)");
                     var p = Actors[this.plrselect];
@@ -864,7 +864,7 @@ this.player.action = 1;//C.DIR.DOWN;
                     
                     var b = Factory.Sheep(9);//C.col.sheep
                     var g = this.mapId==1 ? {s:b[1][0].src, c:b[1][0].col} 
-                                            : {s:assets.tree2, c:12};
+                                            : {s:assetstree2, c:12};
 
                     var shp = this.O.All([this.mapId==1?1:6]);//C.ASSETS.SHEEP or PLANT
                     var p = 48;
@@ -873,7 +873,7 @@ this.player.action = 1;//C.DIR.DOWN;
                             var sz = 0.5*shp[i].size.x;
                             SFX.Polygon(p, 30, g.s, g.c, {x:sz,y:sz,z:sz}, 0);
                             if(!shp[i].enabled || !shp[i].follow){
-                                SFX.Polygon(p, 30, assets.x, 
+                                SFX.Polygon(p, 30, assetsx, 
                                     !shp[i].enabled ? 3 : 0, {x:sz,y:sz,z:sz}, 0);//C.col.red
                             }
                             p+=16;
@@ -916,7 +916,7 @@ this.player.action = 1;//C.DIR.DOWN;
                                 t*=e.ex;
                                 SFX.Text('X '+e.ex, x,260, 6,0,'#ff0', 600);x+=100;
        
-                                SFX.Polygon(x, 292, assets.tree2, 12, {x:.8,y:.8,z:.8}, 0);
+                                SFX.Polygon(x, 292, assetstree2, 12, {x:.8,y:.8,z:.8}, 0);
                                 x+=40;
                             }
                             t*=e.v;
@@ -1023,6 +1023,7 @@ this.player.action = 1;//C.DIR.DOWN;
                     SFX.Text("W", 220,486,3,0); 
                     SFX.Text("A S D / ARROWS                SPACE",200,504,3,0);                         
                 }
+                
             }
             else{
                 var d = MAP.ScreenBounds();        

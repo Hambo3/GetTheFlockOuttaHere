@@ -286,9 +286,9 @@ var Factory={
         var cl = Factory.Col(col);
  
         var ul =[
-            SUtil.Resize(d.t?assets.man.chair.u:assets.man.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
-            SUtil.Resize(assets.man.body.h,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
-            SUtil.Resize(assets.man.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
+            SUtil.Resize(d.t?assetsman.chair.u:assetsman.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
+            SUtil.Resize(assetsman.body.h,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
+            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
         if(d.b){
                 ul.push(SUtil.Resize(xtra.beard[d.b].u,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}));
             }
@@ -299,10 +299,10 @@ var Factory={
         var up = SUtil.Merge(ul);
 
         var dl = [
-            SUtil.Resize(d.t?assets.man.chair.d:assets.man.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
-            SUtil.Resize(assets.man.body.h,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
-            SUtil.Resize(assets.man.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}),
-            SUtil.Resize(assets.man.face.eye.d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})
+            SUtil.Resize(d.t?assetsman.chair.d:assetsman.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
+            SUtil.Resize(assetsman.body.h,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
+            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}),
+            SUtil.Resize(assetsman.face.eye.d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})
         ];
         if(d.b){
             dl.push(SUtil.Resize(xtra.beard[d.b].d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}));
@@ -316,9 +316,9 @@ var Factory={
         var dn = SUtil.Merge(dl);
 
         var ll =[
-            SUtil.Resize(d.t?assets.man.chair.l:assets.man.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
-            SUtil.Resize(assets.man.body.v,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
-            SUtil.Resize(assets.man.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
+            SUtil.Resize(d.t?assetsman.chair.l:assetsman.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
+            SUtil.Resize(assetsman.body.v,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
+            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
         if(d.b){
             ll.push(SUtil.Resize(xtra.beard[d.b].l,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}));
         }
@@ -328,10 +328,10 @@ var Factory={
         var lt = SUtil.Merge(ll);
             
         var rl =[
-            SUtil.Resize(d.t?assets.man.chair.r:assets.man.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
-            SUtil.Resize(assets.man.body.v,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
-            SUtil.Resize(assets.man.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}),
-            SUtil.Resize(assets.man.face.eye.r,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
+            SUtil.Resize(d.t?assetsman.chair.r:assetsman.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
+            SUtil.Resize(assetsman.body.v,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
+            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}),
+            SUtil.Resize(assetsman.face.eye.r,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
         if(d.b){
             rl.push(SUtil.Resize(xtra.beard[d.b].r,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}));
         }
@@ -351,7 +351,7 @@ var Factory={
         var cl = Factory.Col(col);
 
         var hl = [
-            SUtil.Resize(assets.man.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0})
+            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0})
         ];
         if(d.b){
             hl.push(SUtil.Resize(xtra.beard[d.b].d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
@@ -359,7 +359,7 @@ var Factory={
         if(d.w){
             hl.push(SUtil.Resize(d.w==3?xtra.hair[d.w]:xtra.hair[d.w].d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
         } 
-        hl.push(SUtil.Resize(assets.man.face.eye.d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
+        hl.push(SUtil.Resize(assetsman.face.eye.d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
         hl.push(SUtil.Resize(xtra.lips[d.m],{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
         var r = SUtil.Merge(hl);
         return {src:r, col:cl};
@@ -367,7 +367,7 @@ var Factory={
     Sheep:function(col){
         var sz = {x:1,y:1,z:1};
         var sht = {x:0,y:0,z:-11};
-        var bdy = assets.sheep;
+        var bdy = assetssheep;
         var lg = SUtil.Resize(bdy.legs,sz,{x:0,y:0,z:0});
         var bdv = SUtil.Resize(bdy.body,{x:0.8,y:1,z:1},sht);
         var bdh = SUtil.Resize(bdy.body,{x:1,y:0.8,z:1},sht);
@@ -552,14 +552,14 @@ lips:[
 
 };
 
-var assets ={  
-x:[0,[16,16,0,8,16,0,-16,16,-16,-8,16,-16], 0,[-7,16,0,-16,16,0,7,16,-16,16,16,-16]],
-tile:[0,[-16,-16,0, 16,-16,0, 16,16,0, -16,16,0]],
-tileh:[0,[-16,-16,0,16,-16,0,16,16,0,-16,16,0],1,[-11,16,0,-16,16,0,-16,-16,0]],
-block:[2,[-16,-16,-16,16,-16,-16,16,16,-16,-16,16,-16],0,[16,-16,0,16,16,0,16,16,-16,16,-16,-16],1,[16,16,0,-16,16,0,-16,16,-16,16,16,-16]],
-tree1:[4,[8,8,0,-8,8,0,-8,8,-32,8,8,-32],5,[8,-8,0,8,8,0,8,8,-32,8,-8,-32],2,[16,16,-32,-16,16,-32,-16,16,-66,16,16,-66],3,[16,-16,-32,16,16,-32,16,16,-66,16,-16,-66],0,[-16,-16,-66,16,-16,-66,16,16,-66,-16,16,-66]],
-tree2:[4,[8,8,0,-8,8,0,-8,8,-32,8,8,-32],5,[8,-8,0,8,8,0,8,8,-32,8,-8,-32],2,[16,16,-27,-16,16,-27,-16,16,-38,16,16,-38],3,[16,-16,-28,16,16,-28,16,16,-38,16,-16,-38],0,[-16,-16,-38,16,-16,-38,16,16,-38,-16,16,-38],3,[8,-8,-38,8,8,-38,8,8,-50,8,-8,-50],2,[8,8,-38,-8,8,-38,-8,8,-50,8,8,-50],1,[-8,-8,-50,8,-8,-50,8,8,-50,-8,8,-50]],
-man:{
+//var assets ={  
+    var assetsx=[0,[16,16,0,8,16,0,-16,16,-16,-8,16,-16], 0,[-7,16,0,-16,16,0,7,16,-16,16,16,-16]];
+    var assetstile=[0,[-16,-16,0, 16,-16,0, 16,16,0, -16,16,0]];
+    var assetstileh=[0,[-16,-16,0,16,-16,0,16,16,0,-16,16,0],1,[-11,16,0,-16,16,0,-16,-16,0]];
+    var assetsblock=[2,[-16,-16,-16,16,-16,-16,16,16,-16,-16,16,-16],0,[16,-16,0,16,16,0,16,16,-16,16,-16,-16],1,[16,16,0,-16,16,0,-16,16,-16,16,16,-16]];
+    var assetstree1=[4,[8,8,0,-8,8,0,-8,8,-32,8,8,-32],5,[8,-8,0,8,8,0,8,8,-32,8,-8,-32],2,[16,16,-32,-16,16,-32,-16,16,-66,16,16,-66],3,[16,-16,-32,16,16,-32,16,16,-66,16,-16,-66],0,[-16,-16,-66,16,-16,-66,16,16,-66,-16,16,-66]];
+    var assetstree2=[4,[8,8,0,-8,8,0,-8,8,-32,8,8,-32],5,[8,-8,0,8,8,0,8,8,-32,8,-8,-32],2,[16,16,-27,-16,16,-27,-16,16,-38,16,16,-38],3,[16,-16,-28,16,16,-28,16,16,-38,16,-16,-38],0,[-16,-16,-38,16,-16,-38,16,16,-38,-16,16,-38],3,[8,-8,-38,8,8,-38,8,8,-50,8,-8,-50],2,[8,8,-38,-8,8,-38,-8,8,-50,8,8,-50],1,[-8,-8,-50,8,-8,-50,8,8,-50,-8,8,-50]];
+    var assetsman={
 chair:{
 r:[
 0,[16,16,-6,-16,16,-6,-16,16,-22,16,16,-22],
@@ -664,14 +664,14 @@ v:[
 5,[-2,16,-13,5,16,-13,5,22,-13,-2,22,-13]
 ]
 }
-},
-hat:[
+};
+var assetshat=[
 0,[-16,-16,0,16,-16,0,16,16,0,-16,16,0],
 1,[-10,-10,-16,10,-10,-16,10,10,-16,-10,10,-16],
 3,[10,-10,0,10,10,0,10,10,-16,10,-10,-16],
 2,[10,10,0,-10,10,0,-10,10,-16,10,10,-16]
-],
-sheep:{
+];
+var assetssheep={
 legs:[
 5,[11,11,0,-11,11,0,-11,11,-9,11,11,-9],
 4,[11,-10,0,11,11,0,11,11,-10,11,-10,-10] 
@@ -710,7 +710,7 @@ l:[
 }    
 
 }
-};
+
 
 var SOUNDS = [
 [6,.8,9,.01,.02,.04,,4.5,,,,,.01,,,,.05,.63,.03,.36],//hop1

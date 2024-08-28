@@ -119,7 +119,7 @@ class GameObjectBase{
             var pt = Util.IsoPoint(this.pos.x, this.pos.y);  
             
             if(this.shadow){
-                GFX.Polygon(pt.x-x, pt.y-y, assets.tile, 4, this.size, 1, 0.2);//C.col.shadow
+                GFX.Polygon(pt.x-x, pt.y-y, assetstile, 4, this.size, 1, 0.2);//C.col.shadow
             }
             var b = this.Body;
             GFX.Polygon(pt.x-x, pt.y-y-this.z, b.src, b.col, this.size, 1, this.alpha);
@@ -260,17 +260,14 @@ class Dood extends GameObjectBase {
     Update(dt){
         if(this.enabled ){
             if(!this.invince){
-                try {
-                    if(!GOUtil.CanMove(this.pos, this.bounds, this.V.x, 0) )
-                    {
-                        this.V.x=0;
-                    }
-                    if(!GOUtil.CanMove(this.pos, this.bounds, 0, this.V.y) )
-                    {
-                        this.V.y=0;
-                    }                    
-                } catch (error) {
-                    console.log([this]);
+
+                if(!GOUtil.CanMove(this.pos, this.bounds, this.V.x, 0) )
+                {
+                    this.V.x=0;
+                }
+                if(!GOUtil.CanMove(this.pos, this.bounds, 0, this.V.y) )
+                {
+                    this.V.y=0;
                 }
 
             }
@@ -307,7 +304,7 @@ class Player extends Dood {
         this.name = def.n;
         this.gen = def.g;
         this.hat = new Grunt(this.pos.Clone(),
-                [[{src:assets.hat, col:8}]],//C.col.hat
+                [[{src:assetshat, col:8}]],//C.col.hat
                 4,//C.ASSETS.GRUNT,
                 {x:0.6,y:0.6,z:0.6});
                 
@@ -404,7 +401,7 @@ class Gunt extends Dood {
                 {x:20,y:0}
             ];
             this.hat = new Grunt(this.pos.Clone(),
-                    [[{src:assets.hat, col:8}]],//C.col.hat
+                    [[{src:assetshat, col:8}]],//C.col.hat
                     4,//C.ASSETS.GRUNT,
                     {x:0.4,y:0.4,z:0.4});
             this.HatUpdate();  
