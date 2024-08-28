@@ -286,9 +286,9 @@ var Factory={
         var cl = Factory.Col(col);
  
         var ul =[
-            SUtil.Resize(d.t?assetsman.chair.u:assetsman.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
-            SUtil.Resize(assetsman.body.h,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
-            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
+            SUtil.Resize(d.t?assetsmanchairu:assetsmanlegs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
+            SUtil.Resize(assetsmanbodyh,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
+            SUtil.Resize(assetsmanhead,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
         if(d.b){
                 ul.push(SUtil.Resize(xtra.beard[d.b].u,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}));
             }
@@ -299,10 +299,10 @@ var Factory={
         var up = SUtil.Merge(ul);
 
         var dl = [
-            SUtil.Resize(d.t?assetsman.chair.d:assetsman.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
-            SUtil.Resize(assetsman.body.h,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
-            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}),
-            SUtil.Resize(assetsman.face.eye.d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})
+            SUtil.Resize(d.t?assetsmanchaird:assetsmanlegs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
+            SUtil.Resize(assetsmanbodyh,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
+            SUtil.Resize(assetsmanhead,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}),
+            SUtil.Resize(assetsmanfaceeyed,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})
         ];
         if(d.b){
             dl.push(SUtil.Resize(xtra.beard[d.b].d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}));
@@ -316,9 +316,9 @@ var Factory={
         var dn = SUtil.Merge(dl);
 
         var ll =[
-            SUtil.Resize(d.t?assetsman.chair.l:assetsman.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
-            SUtil.Resize(assetsman.body.v,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
-            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
+            SUtil.Resize(d.t?assetsmanchairl:assetsmanlegs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
+            SUtil.Resize(assetsmanbodyv,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
+            SUtil.Resize(assetsmanhead,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
         if(d.b){
             ll.push(SUtil.Resize(xtra.beard[d.b].l,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}));
         }
@@ -328,10 +328,10 @@ var Factory={
         var lt = SUtil.Merge(ll);
             
         var rl =[
-            SUtil.Resize(d.t?assetsman.chair.r:assetsman.legs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
-            SUtil.Resize(assetsman.body.v,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
-            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}),
-            SUtil.Resize(assetsman.face.eye.r,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
+            SUtil.Resize(d.t?assetsmanchairr:assetsmanlegs,{x:1,y:1,z:d.l},{x:0,y:0,z:0}),
+            SUtil.Resize(assetsmanbodyv,{x:d.f,y:d.f,z:1},{x:0,y:0,z:-8*d.l}),
+            SUtil.Resize(assetsmanhead,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}),
+            SUtil.Resize(assetsmanfaceeyer,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)})];
         if(d.b){
             rl.push(SUtil.Resize(xtra.beard[d.b].r,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:(-8*d.l)+(-16*1)}));
         }
@@ -351,7 +351,7 @@ var Factory={
         var cl = Factory.Col(col);
 
         var hl = [
-            SUtil.Resize(assetsman.head,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0})
+            SUtil.Resize(assetsmanhead,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0})
         ];
         if(d.b){
             hl.push(SUtil.Resize(xtra.beard[d.b].d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
@@ -359,7 +359,7 @@ var Factory={
         if(d.w){
             hl.push(SUtil.Resize(d.w==3?xtra.hair[d.w]:xtra.hair[d.w].d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
         } 
-        hl.push(SUtil.Resize(assetsman.face.eye.d,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
+        hl.push(SUtil.Resize(assetsmanfaceeyed,{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
         hl.push(SUtil.Resize(xtra.lips[d.m],{x:d.h,y:d.h,z:d.h},{x:0,y:0,z:0}));
         var r = SUtil.Merge(hl);
         return {src:r, col:cl};
@@ -559,9 +559,7 @@ lips:[
     var assetsblock=[2,[-16,-16,-16,16,-16,-16,16,16,-16,-16,16,-16],0,[16,-16,0,16,16,0,16,16,-16,16,-16,-16],1,[16,16,0,-16,16,0,-16,16,-16,16,16,-16]];
     var assetstree1=[4,[8,8,0,-8,8,0,-8,8,-32,8,8,-32],5,[8,-8,0,8,8,0,8,8,-32,8,-8,-32],2,[16,16,-32,-16,16,-32,-16,16,-66,16,16,-66],3,[16,-16,-32,16,16,-32,16,16,-66,16,-16,-66],0,[-16,-16,-66,16,-16,-66,16,16,-66,-16,16,-66]];
     var assetstree2=[4,[8,8,0,-8,8,0,-8,8,-32,8,8,-32],5,[8,-8,0,8,8,0,8,8,-32,8,-8,-32],2,[16,16,-27,-16,16,-27,-16,16,-38,16,16,-38],3,[16,-16,-28,16,16,-28,16,16,-38,16,-16,-38],0,[-16,-16,-38,16,-16,-38,16,16,-38,-16,16,-38],3,[8,-8,-38,8,8,-38,8,8,-50,8,-8,-50],2,[8,8,-38,-8,8,-38,-8,8,-50,8,8,-50],1,[-8,-8,-50,8,-8,-50,8,8,-50,-8,8,-50]];
-    var assetsman={
-chair:{
-r:[
+    var assetsmanchairr=[
 0,[16,16,-6,-16,16,-6,-16,16,-22,16,16,-22],
 1,[16,-16,-6,16,16,-6,16,16,-22,16,-16,-22],
 3,[-1,16,0,-19,16,0,-19,16,-13,-1,16,-13],
@@ -574,8 +572,8 @@ r:[
 0,[23,8,-5,16,8,-5,16,8,-11,23,8,-11],
 1,[16,2,-10,23,2,-10,23,7,-10,16,7,-10],
 2,[28,9,-6,23,9,-6,23,9,-17,28,9,-17]
-],
-l:[
+];
+var assetsmanchairl=[
 0,[16,16,-6,-16,16,-6,-16,16,-22,16,16,-22],
 1,[16,-16,-6,16,16,-6,16,16,-22,16,-16,-22],
 3,[19,16,0,1,16,0,1,16,-13,19,16,-13],
@@ -588,8 +586,8 @@ l:[
 0,[-15,8,-5,-22,8,-5,-22,8,-11,-15,8,-11],
 1,[-22,2,-10,-15,2,-10,-15,7,-10,-22,7,-10],
 2,[-21,9,-6,-26,9,-6,-26,9,-17,-21,9,-17]
-],
-u:[
+];
+var assetsmanchairu=[
 3,[-17,3,0,-17,18,0,-17,18,-14,-17,3,-14],
 0,[16,16,-6,-16,16,-6,-16,16,-22,16,16,-22],
 1,[16,-16,-6,16,16,-6,16,16,-22,16,-16,-22],
@@ -598,8 +596,8 @@ u:[
 3,[16,-20,0,16,-13,0,16,-13,-7,16,-20,-7],
 2,[-14,18,0,-17,18,0,-17,18,-16,-14,18,-16],
 2,[17,16,0,15,16,0,15,16,-16,17,16,-16]
-],
-d:[
+];
+var assetsmanchaird=[
 2,[-16,3,0,-19,3,0,-19,3,-16,-16,3,-16],
 0,[16,16,-6,-16,16,-6,-16,16,-22,16,16,-22],
 1,[16,-16,-6,16,16,-6,16,16,-22,16,-16,-22],
@@ -615,33 +613,29 @@ d:[
 2,[10,25,-6,2,25,-6,2,25,-17,10,25,-17],
 2,[18,3,0,15,3,0,15,3,-16,18,3,-16],
 2,[18,16,0,16,16,0,16,16,-6,18,16,-6]                
-]
-},
-legs:[
+];
+
+var assetsmanlegs=[
 0,[8,11,0,-8,11,0,-8,11,-16,8,11,-16],
 1,[8,-4,0,8,11,0,8,11,-16,8,-4,-16],
 2,[8,11,0,-8,11,0,-8,11,-5,8,11,-5],
 3,[8,-4,0,8,11,0,8,11,-5,8,-4,-5]
-],
-head:[
+];
+var assetsmanhead=[
 11,[16,16,0,-16,16,0,-16,16,-16,16,16,-16],
 12,[16,-16,0,16,16,0,16,16,-16,16,-16,-16],
 10,[-16,-16,-16,16,-16,-16,16,16,-16,-16,16,-16]
-],
-face:{
-eye:{
-d:[
+];
+var assetsmanfaceeyed=[
 13,[-3,20,-11,-8,20,-11,-8,20,-8,-3,20,-8],
 13,[8,20,-11,3,20,-11,3,20,-8,8,20,-8]
-],
-r:[
+];
+var assetsmanfaceeyer=[
 13,[16,5,-8,16,9,-8,16,9,-11,16,5,-11],
 13,[16,-9,-8,16,-5,-8,16,-5,-11,16,-9,-11]
-]
-}      
-},
-body:{
-h:[
+];
+
+var assetsmanbodyh=[
 6,[-16,4,2,-21,4,2,-21,4,-13,-16,4,-13],
 5,[-21,-4,-13,-16,-4,-13,-16,4,-13,-21,4,-13],
 8,[16,16,0,-16,16,0,-16,16,-16,16,16,-16],
@@ -652,8 +646,8 @@ h:[
 7,[21,-4,2,21,4,2,21,4,-13,21,-4,-13],
 5,[16,-4,-13,21,-4,-13,21,4,-13,16,4,-13],
 5,[-16,-16,-16,16,-16,-16,16,16,-16,-16,16,-16]
-],
-v:[
+];
+var assetsmanbodyv=[
 8,[16,16,0,-16,16,0,-16,16,-16,16,16,-16],
 9,[16,-16,0,16,16,0,16,16,-16,16,-16,-16],
 6,[16,16,-6,-16,16,-6,-16,16,-16,16,16,-16],
@@ -662,15 +656,16 @@ v:[
 6,[5,22,2,-2,22,2,-2,22,-13,5,22,-13],
 7,[5,16,2,5,22,2,5,22,-13,5,16,-13],
 5,[-2,16,-13,5,16,-13,5,22,-13,-2,22,-13]
-]
-}
-};
+];
+
 var assetshat=[
 0,[-16,-16,0,16,-16,0,16,16,0,-16,16,0],
 1,[-10,-10,-16,10,-10,-16,10,10,-16,-10,10,-16],
 3,[10,-10,0,10,10,0,10,10,-16,10,-10,-16],
 2,[10,10,0,-10,10,0,-10,10,-16,10,10,-16]
 ];
+
+
 var assetssheep={
 legs:[
 5,[11,11,0,-11,11,0,-11,11,-9,11,11,-9],
@@ -711,12 +706,6 @@ l:[
 
 }
 
-
-var SOUNDS = [
-[6,.8,9,.01,.02,.04,,4.5,,,,,.01,,,,.05,.63,.03,.36],//hop1
-[1.2,,1665,.02,.09,.16,1,.47,-0.3,-6.6,119,.02,,,,.1,,.41,.05,.17],//fall        
-[1.2,,1664,.02,.1,.16,,.37,-0.3,-6.5,119,.02,,.1,2,.1,,.41,.05,.17]//splash
-];
 
 var FONT = {    
 'A': [

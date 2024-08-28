@@ -53,7 +53,11 @@ function Start(canvasBody)
 		MAP = new MapManger(ctx);
 
 		MUSIC = new ShitMusic();
-		AUDIO = new TinySound(SOUNDS);
+		AUDIO = new TinySound([
+			[6,.8,9,.01,.02,.04,,4.5,,,,,.01,,,,.05,.63,.03,.36],//hop1
+			[1.2,,1665,.02,.09,.16,1,.47,-0.3,-6.6,119,.02,,,,.1,,.41,.05,.17],//fall        
+			[1.2,,1664,.02,.1,.16,,.37,-0.3,-6.5,119,.02,,.1,2,.1,,.41,.05,.17]//splash
+			]);
 
 		//offscreen renderer
 		GFX = new Render(MAP.osCanvas.ctx);	
