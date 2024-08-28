@@ -76,6 +76,19 @@ class Game{
         }
         data.push(trow);
         
+        // var d = 1;
+        // for (let i = 0; i < 40; i++) {	
+        //     var f = [
+        //         [0,7,7,7,0],
+        //         [7,8,8,7,7],
+        //         [0,7,7,7,0]
+        //         ];
+        //     var hh = (f.length/2)|0;
+        //     var hl = (f[0].length/2)|0;
+
+        //     this.Feature(data, f, Util.RndI(o+1+hl, cols-hl), Util.RndI(1+hh, rows-hh));
+        // }
+
         for (let i = 0; i < mapDef.tr; i++) {	
             var x = Util.RndI(o+1,cols);		
             var y = Util.RndI(1,rows-1);

@@ -1,6 +1,8 @@
 //factory
 
-
+var reviews = ['IVE NEVER SEEN ANYTHING LIKE IT',
+    'IM SPEECHLESS'
+]
 var converations = [
     [
         {s:'PLEASE HELP'},
@@ -240,10 +242,12 @@ var Factory={
             l.push({a:Actors[i].n, b:'',y:520});
         }
         l.push({a:'FIN', b:'',y:700}, 
-            {a:'THANKS FOR PLAYING', b:'',y:1100});
-            //{a:'TONY WILL RETURN IN', b:'',y:1400});
-        //l.push({a:'THANKS FOR PLAYING', b:'',y:1100});
-        //l.push({a:'TONY WILL RETURN IN', b:'',y:1400});
+            {a:'THANKS FOR PLAYING', b:'',y:1100},
+            {a:'REVIEWS', b:'',y:1500});
+            // {a:"'IVE NEVER SEEN ANYTHING|LIKE IT'", b:'',y:1520},
+            // {a:'', b:'THE NORTHAMPTON|TRIBUNE',y:1520},
+            // {a:"'IM SPEECHLESS'", b:'',y:1580},
+            // {a:'', b:'THE PRESCOT|TRUMPET',y:1580});
         return l;
     },
     Col:function(col){
@@ -367,16 +371,16 @@ var Factory={
     Sheep:function(col){
         var sz = {x:1,y:1,z:1};
         var sht = {x:0,y:0,z:-11};
-        var bdy = assetssheep;
-        var lg = SUtil.Resize(bdy.legs,sz,{x:0,y:0,z:0});
-        var bdv = SUtil.Resize(bdy.body,{x:0.8,y:1,z:1},sht);
-        var bdh = SUtil.Resize(bdy.body,{x:1,y:0.8,z:1},sht);
+        //var bdy = assetssheep;
+        var lg = SUtil.Resize(assetssheeplegs,sz,{x:0,y:0,z:0});
+        var bdv = SUtil.Resize(assetssheepbody,{x:0.8,y:1,z:1},sht);
+        var bdh = SUtil.Resize(assetssheepbody,{x:1,y:0.8,z:1},sht);
 
         return [ 
-            [{src:SUtil.Merge([lg, SUtil.Resize(bdy.head.u, sz,sht), bdv]), col:col}],
-            [{src:SUtil.Merge([lg,bdv, SUtil.Resize(bdy.head.d, sz,sht)]), col:col}],
-            [{src:SUtil.Merge([lg, SUtil.Resize(bdy.head.l, sz,sht), bdh]), col:col}],
-            [{src:SUtil.Merge([lg,bdh, SUtil.Resize(bdy.head.r, sz,sht)]), col:col}]
+            [{src:SUtil.Merge([lg, SUtil.Resize(assetssheepheadu, sz,sht), bdv]), col:col}],
+            [{src:SUtil.Merge([lg,bdv, SUtil.Resize(assetssheepheadd, sz,sht)]), col:col}],
+            [{src:SUtil.Merge([lg, SUtil.Resize(assetssheepheadl, sz,sht), bdh]), col:col}],
+            [{src:SUtil.Merge([lg,bdh, SUtil.Resize(assetssheepheadr, sz,sht)]), col:col}]
         ]; 
     }
 };
@@ -666,45 +670,42 @@ var assetshat=[
 ];
 
 
-var assetssheep={
-legs:[
+
+var assetssheeplegs=[
 5,[11,11,0,-11,11,0,-11,11,-9,11,11,-9],
 4,[11,-10,0,11,11,0,11,11,-10,11,-10,-10] 
-],
-body:[
+];
+var assetssheepbody=[
 1,[16,16,0,-16,16,0,-16,16,-16,16,16,-16],
 2,[16,-16,0,16,16,0,16,16,-16,16,-16,-16],
 0,[-16,-16,-16,16,-16,-16,16,16,-16,-16,16,-16],
 1,[12,11,-16,-11,11,-16,-11,11,-21,12,11,-21],
 0,[-11,-11,-21,12,-11,-21,12,11,-21,-11,11,-21],
 2,[12,-11,-16,12,11,-16,12,11,-21,12,-11,-21]
-],
-head:{
-u:[
+]
+var assetssheepheadu=[
 4,[8,-24,2,8,-19,2,8,-19,-14,8,-24,-14],
 3,[-8,-24,-14,8,-24,-14,8,-19,-14,-8,-19,-14]
-],
-d:[
+];
+var assetssheepheadd=[
 5,[8,21,2,-8,21,2,-8,21,-14,8,21,-14],
 4,[8,16,2,8,21,2,8,21,-14,8,16,-14],
 3,[-8,16,-14,8,16,-14,8,21,-14,-8,21,-14],
 0,[-1,20,-7,-6,20,-7,-6,20,-10,-1,20,-10],
 0,[6,20,-7,1,20,-7,1,20,-10,6,20,-10]
-],
-r:[
+]
+var assetssheepheadr=[
 5,[16,-8,-14,23,-8,-14,23,8,-14,16,8,-14],
 4,[23,8,2,16,8,2,16,8,-14,23,8,-14],
 3,[23,-8,2,23,8,2,23,8,-14,23,-8,-14],
 0,[24,3,-9,24,7,-9,24,7,-12,24,3,-12],
 0,[24,3,-9,24,7,-9,24,7,-12,24,3,-12]
-],
-l:[
+]
+var assetssheepheadl=[
 4,[-23,-8,-14,-16,-8,-14,-16,8,-14,-23,8,-14],
 3,[-16,8,2,-23,8,2,-23,8,-14,-16,8,-14]
-]
-}    
+];
 
-}
 
 
 var FONT = {    
