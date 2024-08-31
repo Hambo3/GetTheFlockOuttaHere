@@ -3,8 +3,8 @@ class KeyInput{
     static pres = [];//pressed
     static rel = [];//released
 
-    static IsDown(key) {
-        return this.pres[key];
+    static IsDown(k1, k2) {
+        return this.pres[k1] || this.pres[k2];
     }
 
     static IsSingle(key) {
@@ -116,10 +116,10 @@ class TouchPad extends KeyInput{
 }
 
 class Input extends TouchPad{
-    static Up(){return this.Touching(0) || this.IsDown('w') || this.IsDown('ArrowUp')}
-    static Down(){return this.Touching(1) || this.IsDown('s') || this.IsDown('ArrowDown')}
-    static Left(){return this.Touching(2) || this.IsDown('a') || this.IsDown('ArrowLeft')}
-    static Right(){return this.Touching(3) || this.IsDown('d') || this.IsDown('ArrowRight')}
+    static Up(){return this.Touching(0) || this.IsDown('w','ArrowUp')}
+    static Down(){return this.Touching(1) || this.IsDown('s','ArrowDown')}
+    static Left(){return this.Touching(2) || this.IsDown('a','ArrowLeft')}
+    static Right(){return this.Touching(3) || this.IsDown('d','ArrowRight')}
     static Fire1(){return this.Touching(4) || this.IsSingle(' ')}
     static LeftS(){return this.Touched(2) || this.IsSingle('a') || this.IsSingle('ArrowLeft')}
     static RightS(){return this.Touched(3) || this.IsSingle('d') || this.IsSingle('ArrowRight')}

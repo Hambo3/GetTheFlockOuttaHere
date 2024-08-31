@@ -58,7 +58,7 @@ class Game{
         var rows = mapDef.world.height;
         var o = mapDef.world.off;
         var cols= mapDef.world.width;	
-        
+        var d = (cols-o)*rows;
         for (let c = 0; c < cols; c++) {	
             trow[c] = 1;
         }
@@ -76,18 +76,21 @@ class Game{
         }
         data.push(trow);
         
-        // var d = 1;
-        // for (let i = 0; i < 40; i++) {	
-        //     var f = [
-        //         [0,7,7,7,0],
-        //         [7,8,8,7,7],
-        //         [0,7,7,7,0]
-        //         ];
-        //     var hh = (f.length/2)|0;
-        //     var hl = (f[0].length/2)|0;
 
-        //     this.Feature(data, f, Util.RndI(o+1+hl, cols-hl), Util.RndI(1+hh, rows-hh));
-        // }
+        if(d>1500){
+            for (let i = 0; i < d/70; i++) {	
+                var f = [
+                    [0,7,7,7,0],
+                    [7,8,8,7,7],
+                    [0,7,7,7,0]
+                    ];
+                var hh = (f.length/2)|0;
+                var hl = (f[0].length/2)|0;
+
+                this.Feature(data, f, Util.RndI(o+1+hl, cols-hl), Util.RndI(1+hh, rows-hh));
+            }
+        }
+
 
         for (let i = 0; i < mapDef.tr; i++) {	
             var x = Util.RndI(o+1,cols);		
@@ -136,7 +139,7 @@ class Game{
 
         if(mapDef.shp){
             for (let i = 0; i < mapDef.shp.length; i++) {
-                this.Feature(data, sfeature[2], mapDef.shp[i].x, mapDef.shp[i].y);
+                this.Feature(data, sfeature[mapDef.shp[i].t||2], mapDef.shp[i].x, mapDef.shp[i].y);
             }
         }
         return data;
@@ -179,9 +182,9 @@ class Game{
 
         if(map.shp){
             for (let i = 0; i < map.shp.length; i++) {
-                obj.push(
-                    this.Sheep(map.shp[i].x, map.shp[i].y, SheepActors[SINDEX++])
-                );
+                var s = this.Sheep(map.shp[i].x, map.shp[i].y, SheepActors[SINDEX++]);
+                if(map.shp[i].s)s.speed = map.shp[i].s;
+                obj.push(s);
             }
         }
 
@@ -245,11 +248,11 @@ class Game{
             for (var i = 0; i < map.rshp; i++) {
                 do{
                     //??? other sheep
-                    var g = map.gr;
+                    //var g = map.gr;
                     var x = Util.RndI(2, c-2);
                     var y = Util.RndI(2, row-20);
-                    var gx = x/(c/g[0])|0;
-                    var gy = y/(row/g[1])|0;
+                    var gx = x/(c/map.gr[0])|0;
+                    var gy = y/(row/map.gr[1])|0;
                     var m = map.data[y][x+map.world.off];
                     var b = gps.filter(f=>f.x == gx && f.y == gy).length;
                 }while (m!=0 || b>0);
@@ -304,8 +307,8 @@ class Game{
                 }
                 if(id==4){
                     this.introEvents = [
-                        {t:4, p: new Vector2(map.start.x*32, map.start.y*32), tx:"'RUN TONY RUN'",s:7,c:5,x:100},
-                        {t:3, p: new Vector2(map.start.x*32, map.start.y*32), tx:'RUN FOR YOUR LIFE '+this.player.name,s:5,x:100}
+                        {t:4, p: new Vector2(map.start.x*32, map.start.y*32), tx:"'RUN '"+this.player.name+"' RUN'",s:7,c:5,x:100},
+                        {t:3, p: new Vector2(map.start.x*32, map.start.y*32), tx:'RUN FOR YOUR LIFE!',s:5,x:100}
                     ];
                 }
             }
@@ -601,7 +604,7 @@ class Game{
     }
 
     Score(s, p){
-        if(s){
+        if(this.M &&  s){
             this.score+=s;
             this.calls.push({p:Util.IsoPoint(p.x, p.y-32),
                 tx:new TextSprite(s, 3, 0, "#0ff"),tm:new Timer(3)});            
@@ -684,6 +687,10 @@ class Game{
                 this.titlebgc+=dt;
             }
             else{
+                if(Util.OneIn(500)){
+                    var b = this.O.Get([1]);
+                    if(b.length && !b[0].target)b[0].target = {pos:b[0].pos.Clone().AddXY(240,0)};
+                }
                 if(Input.Space()){
                     if(this.titlesct){
                         this.titlesct = 0;
@@ -984,11 +991,11 @@ this.player.action = 1;//C.DIR.DOWN;
             SFX.Text("SCORE "+this.score,200,y+190,6,0,c); 
 
             if(this.M == 4){//C.MODE.WON
-                var c= this.creds;
-                for (let i = 0; i < c.length; i++) {
+                var cr= this.creds;
+                for (let i = 0; i < cr.length; i++) {
 
-                    SFX.Text(c[i].a, 200, y+c[i].y+(i*30),4,1,c);
-                    SFX.Text(c[i].b.replace('{p}', this.player.name), 500, y+c[i].y+(i*30),4,1,c); 
+                    SFX.Text(cr[i].a, 200, y+cr[i].y+(i*30),4,1,c);
+                    SFX.Text(cr[i].b.replace('{p}', this.player.name), 500, y+cr[i].y+(i*30),4,1,c); 
                 }
                 
                 SFX.Text(this.btn,280,560,4,0); 

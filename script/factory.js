@@ -1,8 +1,6 @@
 //factory
 
-var reviews = ['IVE NEVER SEEN ANYTHING LIKE IT',
-    'IM SPEECHLESS'
-]
+
 var converations = [
     [
         {s:'PLEASE HELP'},
@@ -43,7 +41,7 @@ var DEF = {
         {//title
             world:{width:30, height:30,off:0},
             start:null,
-            shp:[{x:14, y:12}],
+            shp:[{x:14, y:12,s:60,t:6}],
             tr:24,
             fr:1,
             end:null,
@@ -242,12 +240,13 @@ var Factory={
             l.push({a:Actors[i].n, b:'',y:520});
         }
         l.push({a:'FIN', b:'',y:700}, 
-            {a:'THANKS FOR PLAYING', b:'',y:1100},
-            {a:'REVIEWS', b:'',y:1500});
+            {a:'THANKS FOR PLAYING', b:'',y:1100}//,
+           // {a:'REVIEWS', b:'',y:1500},
             // {a:"'IVE NEVER SEEN ANYTHING|LIKE IT'", b:'',y:1520},
-            // {a:'', b:'THE NORTHAMPTON|TRIBUNE',y:1520},
+            //  {a:'', b:'THE NORTHAMPTON|TRIBUNE',y:1520}
             // {a:"'IM SPEECHLESS'", b:'',y:1580},
-            // {a:'', b:'THE PRESCOT|TRUMPET',y:1580});
+            // {a:'', b:'THE PRESCOT|TRUMPET',y:1580}
+        );
         return l;
     },
     Col:function(col){
@@ -425,6 +424,7 @@ var sfeature = [
     [7,7,7,7,7],
     [7,7,7,7,7]
 ]
+,[[0,0,0,0,0,0,0,0,0,0,2,5]]
 ];
 
 var rfeature = [

@@ -8,14 +8,7 @@
 var fps = 60;
 
 var rf = (function(){
-  return requestAnimationFrame    ||
-      webkitRequestAnimationFrame ||
-      mozRequestAnimationFrame    ||
-      oRequestAnimationFrame      ||
-      msRequestAnimationFrame     ||
-      function(cb){
-          setTimeout(cb, 1000 / fps);
-      };
+  return requestAnimationFrame;
 })();
 
 var Mob = window.ontouchstart !== undefined;
@@ -108,8 +101,7 @@ function FixedLoop(){
 }
 
 function timestamp() {
-	var wp = performance;
-	return wp && wp.now ? wp.now() : new Date().getTime();
+	return performance.now();
 }
 
 // Update game objects
