@@ -78,16 +78,20 @@ class Game{
         
 
         if(d>1500){
-            for (let i = 0; i < d/70; i++) {	
+            for (let i = 0; i < d/60; i++) {	
                 var f = [
-                    [0,7,7,7,0],
-                    [7,8,8,7,7],
-                    [0,7,7,7,0]
+                    [0,0,7,7,7,7,0,0],
+                    [0,7,7,7,7,7,7,0],
+                    [7,7,8,8,7,7,7,7],
+                    [7,7,8,8,7,7,7,7],
+                    [0,7,7,7,7,7,7,0],
+                    [0,0,7,7,7,7,0,0]
                     ];
-                var hh = (f.length/2)|0;
-                var hl = (f[0].length/2)|0;
 
-                this.Feature(data, f, Util.RndI(o+1+hl, cols-hl), Util.RndI(1+hh, rows-hh));
+                var ylength = ((f.length)/2)|0;
+                var xlength = ((f[0].length)/2)|0;
+
+                this.Feature(data, f, Util.RndI(o+1+xlength, cols-xlength), Util.RndI(1+ylength, rows-ylength),Util.RndI(1,3),Util.RndI(1,3));
             }
         }
 
@@ -320,13 +324,18 @@ class Game{
         this.yval=0;
     }
     
-    Feature(d, f, x, y){
-        y -= (f.length/2)|0;
-        x -= (f[0].length/2)|0;
-        for (let r = 0; r < f.length; r++) {
-            for (let c = 0; c < f[r].length; c++) {
-                d[y+r][x+c]=f[r][c];
+    Feature(d, f, x, y,sx=1,sy=1){
+        y -= ((f.length)/2)|0;
+        x -= ((f[0].length)/2)|0;
+        var rp = 0;
+        var cp=0;
+        for (let r = 0; r < f.length; r+=sy) {
+            for (let c = 0; c < f[r|0].length; c+=sx) {
+                d[y+rp][x+cp]=f[r|0][c|0];
+                cp++;
             }
+            rp++;
+            cp=0;
         }
     }
 
@@ -875,12 +884,12 @@ this.player.action = 1;//C.DIR.DOWN;
             if(this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6 || this.M == 7){
                 
                 if(this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6){
-                    
-                    SFX.Box(0,0, 800, 40 ,"rgba(0,0,0,0.6)");
+                    var ob = this.mob?40:0;
+                    SFX.Box(0,0, 800, 40+ob ,"rgba(0,0,0,0.6)");
                     var p = Actors[this.plrselect];
                     var b = Factory.Head(p.c, p.d);
-                    SFX.Polygon(16, 30, b.src, b.col, {x:.8,y:.8,z:1.6}, 0);
-                    SFX.Text(this.score,440,10,4,0);  
+                    SFX.Polygon(16, 30+ob, b.src, b.col, {x:.8,y:.8,z:1.6}, 0);
+                    SFX.Text(this.score,440,10+ob,4,0);  
                     
                     var b = Factory.Sheep(9);//C.col.sheep
                     var g = this.mapId==1 ? {s:b[1][0].src, c:b[1][0].col} 
@@ -891,9 +900,9 @@ this.player.action = 1;//C.DIR.DOWN;
                     for (let i = 0; i < shp.length; i++) {
                         if(shp[i].found){
                             var sz = 0.5*shp[i].size.x;
-                            SFX.Polygon(p, 30, g.s, g.c, {x:sz,y:sz,z:sz}, 0);
+                            SFX.Polygon(p, 30+ob, g.s, g.c, {x:sz,y:sz,z:sz}, 0);
                             if(!shp[i].enabled || !shp[i].follow){
-                                SFX.Polygon(p, 30, assetsx, 
+                                SFX.Polygon(p, 30+ob, assetsx, 
                                     !shp[i].enabled ? 3 : 0, {x:sz,y:sz,z:sz}, 0);//C.col.red
                             }
                             p+=16;

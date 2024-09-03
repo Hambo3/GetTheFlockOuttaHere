@@ -1,6 +1,6 @@
 
   body {
-    background-color: #600a75;
+    background-color: #731180;
   }
   
   #cb canvas {
@@ -14,6 +14,7 @@
     height: 76vw;
     max-height: 100vh;
     max-width: 131.57vh;
+
     margin: auto;
     position: absolute;
     top: 0;

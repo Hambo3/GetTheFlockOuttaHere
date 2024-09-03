@@ -1,17 +1,7 @@
 class MapManger{
 
     constructor(ctx){
-        this.tileset = [
-            {t:assetstile,c:0}, 
-            {t:assetstile,c:10},//edge
-            {t:assetstileh,c:1},//we
-            {t:assetstileh,c:2},//he
-            {t:assetstile,c:10},//treebase
-            {t:assetstile,c:1},//w
-            {t:assetstile,c:2},//h
-            {t:assetstile,c:10}, //dkg
-            {t:assetstile,c:11} 
-        ];
+        this.tileset = [0,10,1,2,10,1,2,10,11];
         
         this.offset = new Vector2();
 
@@ -58,11 +48,12 @@ class MapManger{
             for(var c = 0; c < this.area.x; c++) 
             {            
                 var pt = Util.IsoPoint((c * this.tileSize)+h, (r * this.tileSize)+h); 
+                var n = this.mapData[r][c];
                 this.rend.Polygon(
                     pt.x,
                     pt.y,
-                    this.tileset[this.mapData[r][c]].t,
-                    this.tileset[this.mapData[r][c]].c, {x:1,y:1,z:1},1); 
+                    n==2||n==3?assetstileh:assetstile,
+                    this.tileset[n], {x:1,y:1,z:1},1); 
              }
         }
     }
@@ -177,7 +168,8 @@ class Render{
     constructor(context, width, height)
     {
         this.ctx = context;
-        this.bounds = {w:width,h:height};
+        this.boundsw = width;
+        this.boundsh = height;
     }
 
     PT(p){
@@ -193,8 +185,7 @@ class Render{
     }
 
     Side(x, y, pts, col, sz, a, d){
-        var color = new Color(col, a);
-        this.ctx.fillStyle = color.RGBA();//col;   
+        this.ctx.fillStyle = new Color(col, a).RGBA();//col;   
 
         this.ctx.beginPath();
         var pt = d?Util.IsoPoint(pts[0]*sz.x, pts[1]*sz.y):new Vector2(pts[0]*sz.x, pts[2]*sz.z);
@@ -219,7 +210,7 @@ class Render{
  
 
     Clear(){
-        this.ctx.clearRect(0, 0, this.bounds.w, this.bounds.h);
+        this.ctx.clearRect(0, 0, this.boundsw, this.boundsh);
     }
     Box(x,y,w,h,c){
         this.ctx.fillStyle = c || '#000';
@@ -249,7 +240,7 @@ class Render{
         this.ctx.fillStyle = col || '#fff';
 
         var cr = xs;
-        var blockSize = new Vector2(0,0);
+        var length = new Vector2(0,0);
 
         for (var i = 0; i < str.length; i++) {
             var xp = 0;
@@ -276,7 +267,7 @@ class Render{
                         var szx = (sc && c==row.length-1) ? size*2 : size;
                         var szy = (sc && r==l.length-1) ? size*2 : size;
                         if (row[c]) {
-                            this.ctx.fillRect(Math.round(xp + xs), Math.round(yp + ys), szx, szy);
+                            this.ctx.fillRect(xp + xs, yp + ys, szx, szy);
                         }
                         xp += szx;
                         chrSize.x += szx;
@@ -285,13 +276,13 @@ class Render{
                     yp += szy;
                     chrSize.y += szy;
                 }
-                blockSize.x += chrSize.x + size;
-                blockSize.y = chrSize.y;
+                length.x += chrSize.x + size;
+                length.y = chrSize.y;
 
                 xs += mx + size; 
             }
         }
 
-        return blockSize;
+        return length;
     }  
 }
