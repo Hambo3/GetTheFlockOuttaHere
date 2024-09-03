@@ -8,8 +8,8 @@ WAD Arrows to move
 SPACE to perform action  
 Mobile touch controls  
 
-### General
-
+### Story
+Tony must gather the lost sheep and return them to their home. Along the way you will meet people that may or may not have a simple task for you to complete.
 
 
 ## Why
