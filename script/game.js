@@ -96,10 +96,10 @@ class Game{
         }
 
 
-        for (let i = 0; i < mapDef.tr; i++) {	
+        for (let i = 0; i < mapDef.tr[0]; i++) {	
             var x = Util.RndI(o+1,cols);		
             var y = Util.RndI(1,rows-1);
-            var t = Util.RndI(2,5);
+            var t = Util.OneOf(mapDef.tr[1]);
             if(t==2 && (data[y][x-1] == 2 || data[y+1][x] == 2)) t = 5;
             if(t==3 && (data[y][x-1] == 3 || data[y+1][x] == 3)) t = 6;
             data[y][x]=t;
@@ -311,8 +311,8 @@ class Game{
                 }
                 if(id==4){
                     this.introEvents = [
-                        {t:4, p: new Vector2(map.start.x*32, map.start.y*32), tx:"'RUN '"+this.player.name+"' RUN'",s:7,c:5,x:100},
-                        {t:3, p: new Vector2(map.start.x*32, map.start.y*32), tx:'RUN FOR YOUR LIFE!',s:5,x:100}
+                        {t:4, p: new Vector2(map.start.x*32, (map.start.y*32)-80), tx:"'RUN '"+this.player.name+"' RUN'",s:7,c:5,x:100},
+                        {t:3, p: new Vector2(map.start.x*32, (map.start.y*32)-80), tx:'RUN FOR YOUR LIFE!',s:5,x:100}
                     ];
                 }
             }
@@ -589,7 +589,8 @@ class Game{
 
         var o = new Gunt(p, 8, d, Factory.Man(d.c, d.d), 0)//C.ASSETS.TRANY;
         o.target = t;
-        o.speed = Util.RndI(s1, s2);
+        o.speed = 30;
+        o.accel = Util.RndI(s1, s2);
         return o;
     }
     Splash(pos){

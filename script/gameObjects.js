@@ -376,7 +376,7 @@ class Gunt extends Dood {
         this.maxJumpHt = 8;
         this.zV = 240;
         this.damping=0.85;
-
+        this.accel=0;
         this.body = bdy;
         var sz = type==1 || type==8 ? def.s || Util.Rnd(0.3)+0.7 : 1;//C.ASSETS.PPL
         this.name = def.n;
@@ -489,7 +489,9 @@ class Gunt extends Dood {
                 //this.action = 0;
             }           
         }
-
+        if(this.accel > this.speed){
+            this.speed+=(8*dt);
+        }
         super.Update(dt);
     
         if(this.type==1){
@@ -524,7 +526,6 @@ class Grunt extends GameObjectBase {
         this.speed=100;
 
         this.damping=0.85;
-
         this.body = bdy; 
         this.size = sz;
         this.action = 0;

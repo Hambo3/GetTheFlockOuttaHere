@@ -4,9 +4,9 @@
 var converations = [
     [
         {s:'PLEASE HELP'},
-        {s:'ALL MY SHEEP HAVE ESCAPED AND NEED RETURNING TO THEIR PEN'},
+        {s:'MY SHEEP HAVE ESCAPED AND NEED RETURNING TO THEIR PEN'},
         {p:'DONT TELL ME, THERES 13 OF THEM RIGHT?'},
-        {s:'THATS RIGHT, AND ITS TERRIBLE BAD LUCK TO HAVE 13 SHEEP ON THE LOOSE'},
+        {s:'THATS RIGHT, AND ITS BAD LUCK TO HAVE 13 SHEEP ON THE LOOSE'},
         {p:'THATS A STRETCH BUT OK, ILL DO IT'}
     ],
     [],
@@ -42,7 +42,7 @@ var DEF = {
             world:{width:30, height:30,off:0},
             start:null,
             shp:[{x:14, y:12,s:60,t:6}],
-            tr:24,
+            tr:[24,[2,3,4]],
             fr:1,
             end:null,
             data:[],
@@ -57,7 +57,7 @@ var DEF = {
                 {x:40, y:116}
             ],
             rshp:10,
-            tr:120,
+            tr:[120,[2,3,4,4,4]],
             fr:20,
             gr:[5,10],
             ppl:[
@@ -74,7 +74,7 @@ var DEF = {
             world:{width:40, height:40,off:4},
             start:{x:7, y:20,v:0},
             rshp:0,
-            tr:50,
+            tr:[50,[2,3,4,4]],
             fr:10,
             tme:40,
             plt:[6,5,10,20,30],
@@ -86,7 +86,7 @@ var DEF = {
             world:{width:100, height:48,off:8},
             start:{x:12, y:20,v:0},
             rshp:0,
-            tr:114,
+            tr:[114,[2,3,4,4]],
             fr:14,
             tme:45,
             simp:[
@@ -101,20 +101,14 @@ var DEF = {
             world:{width:48, height:100,off:10},
             start:{x:28, y:12,v:2},
             rshp:0,
-            tr:70,
+            tr:[70,[2,3,4,4,4]],
             fr:16,
             rsimp:16,
             end:{x:28 , y:80,t:1},
             data:[],
             obj:[]
         }
-    ],
-    map:{
-        size:{
-            tile:{width:32, height:32},
-            screen:{width:25, height:19}
-        }
-    }
+    ]
 };
 
 

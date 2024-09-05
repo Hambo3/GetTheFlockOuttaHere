@@ -100,9 +100,9 @@ class TouchPad extends KeyInput{
         return s;
     }
 
-    static Any() {
-        return this.press.length > 0;
-    }
+    // static Any() {
+    //     return this.press.length > 0;
+    // }
 
     static Touch(indx) {
         for (var i = 0; i < this.press.length; i++) {

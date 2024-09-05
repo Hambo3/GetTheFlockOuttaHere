@@ -267,7 +267,7 @@ class Render{
                         var szx = (sc && c==row.length-1) ? size*2 : size;
                         var szy = (sc && r==l.length-1) ? size*2 : size;
                         if (row[c]) {
-                            this.ctx.fillRect(xp + xs, yp + ys, szx, szy);
+                            this.ctx.fillRect(Math.round(xp + xs), Math.round(yp + ys), szx, szy);
                         }
                         xp += szx;
                         chrSize.x += szx;

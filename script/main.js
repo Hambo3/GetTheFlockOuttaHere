@@ -5,7 +5,6 @@
 //https://xem.github.io/articles/jsgamesinputs.html
 //https://xem.github.io/js13k-pack/
 
-var fps = 60;
 
 var rf = (function(){
   return requestAnimationFrame;
@@ -17,9 +16,8 @@ var Mob = window.ontouchstart !== undefined;
 var lastTime;
 var now;
 var dt = 0;
-var slowMo = 1;
-var step = 1 / fps;
-var sStep = slowMo * step;
+var step = 1 / 60;
+var sStep = 1 * step;
 
 var GAME;
 var GFX, SFX;
@@ -37,8 +35,8 @@ function Start(canvasBody)
 	if(canvas.getContext)
 	{
 		ctx = canvas.getContext("2d");
-		canvas.width = (DEF.map.size.screen.width * DEF.map.size.tile.width);
-		canvas.height = (DEF.map.size.screen.height * DEF.map.size.tile.height);
+		canvas.width = (25 * 32);
+		canvas.height = (19 * 32);
 
 		var b = document.getElementById(canvasBody);
     	b.appendChild(canvas);
@@ -55,8 +53,7 @@ function Start(canvasBody)
 		//offscreen renderer
 		GFX = new Render(MAP.osCanvas.ctx);	
 
-		SFX = new Render(MAP.screenCtx, DEF.map.size.screen.width* DEF.map.size.tile.width, 
-			DEF.map.size.screen.height* DEF.map.size.tile.height);	
+		SFX = new Render(MAP.screenCtx, 25* 32, 19* 32);	
 
 		Input.Init(canvas, Mob, SFX,['#000','#999'],0);
 
