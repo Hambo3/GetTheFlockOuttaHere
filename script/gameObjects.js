@@ -135,7 +135,6 @@ class Dood extends GameObjectBase {
     constructor(pos, type)
     {
         super(pos, type);  
-        //this.j = 32; 
         this.mtype = 0;
         this.maxJumpHt=0;
         this.jumpHt = 0;
@@ -531,7 +530,6 @@ class Grunt extends GameObjectBase {
         this.action = 0;
         this.V = v;
         this.zV = 40;
-        this.shadow = 0;
         this.pi = pi;
         this.static = st;
         this.found = 1;

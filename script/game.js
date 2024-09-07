@@ -77,8 +77,8 @@ class Game{
         data.push(trow);
         
 
-        if(d>1500){
-            for (let i = 0; i < d/60; i++) {	
+        var dd = d<1500?10:60;
+            for (let i = 0; i < dd; i++) {	
                 var f = [
                     [0,0,7,7,7,7,0,0],
                     [0,7,7,7,7,7,7,0],
@@ -93,7 +93,7 @@ class Game{
 
                 this.Feature(data, f, Util.RndI(o+1+xlength, cols-xlength), Util.RndI(1+ylength, rows-ylength),Util.RndI(1,3),Util.RndI(1,3));
             }
-        }
+        //}
 
 
         for (let i = 0; i < mapDef.tr[0]; i++) {	
@@ -982,8 +982,6 @@ this.player.action = 1;//C.DIR.DOWN;
 
         //if(this.M == C.MODE.WIN || this.M == C.MODE.WON){
         if(this.M == 3 || this.M == 4){
-            //MAP.PostRender();
-            
             this.BG(0, 0.6, this.bg);
             var shp = this.O.All([1]);
             var d = shp.filter(l => !l.enabled).length;
@@ -1013,8 +1011,6 @@ this.player.action = 1;//C.DIR.DOWN;
         }
         //if(this.M == C.MODE.LOST || this.M == C.MODE.LOSE){
         if(this.M == 6 || this.M == 5){
-            //MAP.PostRender();
-
             this.BG(0, 0.6, this.bg);
             var shp = this.O.All([1]);
             var f = shp.filter(l => l.enabled && l.follow).length;
