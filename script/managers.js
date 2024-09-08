@@ -1,7 +1,7 @@
 class MapManger{
 
     constructor(ctx){
-        this.tileset = [0,10,1,2,10,1,2,10,11,13];
+        this.tileset = [0,10,1,2,10 ,1,2,10,11,13];
         
         this.offset = new Vector2();
 
@@ -21,10 +21,10 @@ class MapManger{
     }
 
     Set(md){
-        this.mapSize = new Vector2(md.world.width, md.world.height);
+        this.mapSize = new Vector2(md.world[0], md.world[1]);
         this.mapSize.Multiply(this.tileSize);
 
-        this.area = new Vector2(md.world.width, md.world.height);
+        this.area = new Vector2(md.world[0], md.world[1]);
         this.bounds = new Vector2(this.mapSize.x,this.mapSize.y);
 
         this.mapData = md.data;

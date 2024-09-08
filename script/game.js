@@ -55,9 +55,9 @@ class Game{
         var data = [];
         var trow = [];
         
-        var rows = mapDef.world.height;
-        var o = mapDef.world.off;
-        var cols= mapDef.world.width;	
+        var rows = mapDef.world[1];
+        var o = mapDef.world[2];
+        var cols= mapDef.world[0];	
         var d = (cols-o)*rows;
         for (let c = 0; c < cols; c++) {	
             trow[c] = 1;
@@ -134,8 +134,8 @@ class Game{
             var s = mapDef.plt[1];
             for (var i = 2; i < mapDef.plt.length; i++) {	
                 for (var p=0; p < n; p++) {
-                    var t = {p:new Vector2(((mapDef.world.off+s+(p*s))*32)+16, (mapDef.plt[i]*32)+16), a:0, i:ix++};
-                    this.Feature(data, sfeature[3], mapDef.world.off+s+(p*s), mapDef.plt[i]);
+                    var t = {p:new Vector2(((mapDef.world[2]+s+(p*s))*32)+16, (mapDef.plt[i]*32)+16), a:0, i:ix++};
+                    this.Feature(data, sfeature[3], mapDef.world[2]+s+(p*s), mapDef.plt[i]);
                     this.plots.push(t);
                 }
             }
@@ -150,8 +150,8 @@ class Game{
     }
 
     FixedAssets(map){
-        var col = map.world.width;
-        var row = map.world.height;
+        var col = map.world[0];
+        var row = map.world[1];
         var obj = [];  
         //add trees
         for(var r = 0; r < row; r++) 
@@ -202,11 +202,11 @@ class Game{
                 }
                 else{
                     do{
-                        var x = Util.RndI(2, col-map.world.off-2);
+                        var x = Util.RndI(2, col-map.world[2]-2);
                         var y = ((map.ppl[i].r*r)+(r/2))|0;
-                        var m = map.data[y][x+map.world.off];
+                        var m = map.data[y][x+map.world[2]];
                     }while (m!=0);
-                    p = new Vector2(map.world.off+x, y).Add(0.5).Multiply(32);                    
+                    p = new Vector2(map.world[2]+x, y).Add(0.5).Multiply(32);                    
                 }
 
                 var d = Actors[map.ppl[i].act];
@@ -248,7 +248,7 @@ class Game{
 
         if(map.rshp){
             var gps=[];
-            var c = col-map.world.off;
+            var c = col-map.world[2];
             for (var i = 0; i < map.rshp; i++) {
                 do{
                     //??? other sheep
@@ -257,11 +257,11 @@ class Game{
                     var y = Util.RndI(2, row-20);
                     var gx = x/(c/map.gr[0])|0;
                     var gy = y/(row/map.gr[1])|0;
-                    var m = map.data[y][x+map.world.off];
+                    var m = map.data[y][x+map.world[2]];
                     var b = gps.filter(f=>f.x == gx && f.y == gy).length;
                 }while (m!=0 || b>0);
 
-                var s = this.Sheep(map.world.off+x, y, SheepActors[SINDEX++]);
+                var s = this.Sheep(map.world[2]+x, y, SheepActors[SINDEX++]);
 
                 obj.push(s);
                 gps.push({x:gx,y:gy});
@@ -312,6 +312,7 @@ class Game{
                 if(id==4){
                     this.introEvents = [
                         {t:4, p: new Vector2(map.start.x*32, (map.start.y*32)-80), tx:"'RUN '"+this.player.name+"' RUN'",s:7,c:5,x:100},
+                        {t:3, p: new Vector2(map.end.x*32, (map.end.y*32)-80), tx:'GET HOME'},
                         {t:3, p: new Vector2(map.start.x*32, (map.start.y*32)-80), tx:'RUN FOR YOUR LIFE!',s:5,x:100}
                     ];
                 }
@@ -929,7 +930,7 @@ this.player.action = 1;//C.DIR.DOWN;
                             SFX.Polygon(48, 132, h.src, h.col, {x:2,y:2,z:4}, 0); 
                         }           
                         if(this.bonusn){
-                            SFX.Text(this.bonusn, 100,50, 4,0,'#dd0', 600);
+                            SFX.Text(this.bonusn, 116,50, 4,0,'#dd0', 600);
                         }
                         if(e.ns){
                             var t=e.ns;
@@ -953,14 +954,14 @@ this.player.action = 1;//C.DIR.DOWN;
                             SFX.Text('X '+e.v+' = '+t, x,260, 6,0,'#ff0', 600);x+=40;
                         }
                         else{
-                            SFX.Text(e.s, 100,80, 5,0,'#ff0', 600);
+                            SFX.Text(e.s, 116,80, 5,0,'#ff0', 600);
                         }
                     }else{
                         var a = Actors[this.plrselect];
                         var h = Factory.Head(a.c, a.d);
                         SFX.Polygon(48, 132, h.src, h.col, {x:2,y:2,z:4}, 0);
-                        SFX.Text(this.player.name, 100,50, 4,0,'#0dd', 700);
-                        SFX.Text(e.p, 100,80, 5,0,'#0ff', 700);
+                        SFX.Text(this.player.name, 116,50, 4,0,'#0dd', 700);
+                        SFX.Text(e.p, 116,80, 5,0,'#0ff', 700);
                     }
 
                     SFX.Text(this.btn,280,560,4,0);

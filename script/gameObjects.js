@@ -102,7 +102,7 @@ class GameObjectBase{
         this.hits = 16;
         this.z = 0;
         this.size = {x:1,y:1,z:1};
-        this.shadow = false;
+        this.shadow = 0;
         this.alpha = 1;
         this.static = 0;
     }
@@ -119,7 +119,7 @@ class GameObjectBase{
             var pt = Util.IsoPoint(this.pos.x, this.pos.y);  
             
             if(this.shadow){
-                GFX.Polygon(pt.x-x, pt.y-y, assetstile, 4, this.size, 1, 0.2);//C.col.shadow
+                GFX.Polygon(pt.x-x, pt.y-y, this.shadow, 4, this.size, 1, 0.2);//C.col.shadow
             }
             var b = this.Body;
             GFX.Polygon(pt.x-x, pt.y-y-this.z, b.src, b.col, this.size, 1, this.alpha);
@@ -297,7 +297,7 @@ class Player extends Dood {
         this.body = Factory.Man(def.c, def.d);
 
         this.tall = (8*leght)+(16*1)+(16*hsz);
-        this.shadow = true;
+        this.shadow = assetstile;
         this.action = 3;//C.DIR.DOWN;
 
         this.name = def.n;
@@ -385,7 +385,7 @@ class Gunt extends Dood {
         this.follow = 0;
         this.found = 0;
         this.level = lvl;
-        this.shadow = true;
+        this.shadow = assetstile;
         this.call = type==2 || type==8 ? def.call : ["BAA","MEH"];//C.ASSETS.PPL
         this.fall = 0;
         this.ct = new Timer(2);
@@ -524,6 +524,7 @@ class Grunt extends GameObjectBase {
         super(pos, type);
         this.speed=100;
 
+        this.shadow=type == 3? assetstilew:0;
         this.damping=0.85;
         this.body = bdy; 
         this.size = sz;
