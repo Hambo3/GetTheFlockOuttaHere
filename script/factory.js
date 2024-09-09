@@ -74,9 +74,9 @@ var DEF = {
             world:[40, 40,4],
             start:{x:7, y:20,v:0},
             rshp:0,
-            tr:[50,[2,3,4,4]],
+            tr:[40,[2,3,4,4]],
             fr:10,
-            tme:40,
+            tme:45,
             plt:[6,5,10,20,30],
             end:null,
             data:[],
@@ -88,7 +88,7 @@ var DEF = {
             rshp:0,
             tr:[114,[2,3,4,4]],
             fr:14,
-            tme:45,
+            tme:50,
             simp:[
                 {x:24, y:18},
                 {x:24, y:22}
@@ -213,14 +213,15 @@ var SheepActors = [
     {n:'GREG'},
     {n:'PERCY'},
     {n:'PAUL'},
-    {n:'RAJESH'},
+    {n:'RAJ'},
 
     {n:'SAM'},
     {n:'KATHY'},
     {n:'DAZ'},
     {n:'COLIN'},
     {n:'JIMMY'},
-    {n:'BILLY'}
+    {n:'BILLY'},
+    {n:'DAN'}
 
 ];
 var Factory={

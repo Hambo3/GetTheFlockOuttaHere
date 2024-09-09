@@ -430,7 +430,7 @@ class Gunt extends Dood {
 
             if(!this.found && this.type==1 && (d.d < 8*32)) {
                 this.found=1;
-                GAME.Score(100, this.pos);//collect sheep
+                GAME.Score(100, this.pos.Clone().AddXY(0,-32));//collect sheep
             }
             this.follow = (d.d < 8*32);
             if(d.d > 15*32 && d.d < 24*32)
@@ -450,7 +450,7 @@ class Gunt extends Dood {
                 if(!this.activated && d.d < 3*32){
                     this.activated = 1;
                     this.action = 1;//C.DIR.DOWN;
-                    GAME.Score(this.level<0?0:50, this.pos);//speak to nob
+                    GAME.Score(this.level<0?0:50, this.pos.Clone().AddXY(0,-32));//speak to nob
                     GAME.NextLvl(this.level, this.pos, this.name);
                 } 
             }

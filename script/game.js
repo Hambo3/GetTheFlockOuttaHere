@@ -406,7 +406,7 @@ class Game{
             }
             if(this.mapId==3){
                 if(this.lvlTm.enabled){
-                    var b = this.lvlTm.time>15?'THESE':this.lvlTm.time>0?'THIS':'';
+                    var b = this.lvlTm.time>12?'THESE':this.lvlTm.time>0?'THIS':'';
                     this.bonuspt = this.lvlTm.time>10?2:this.lvlTm.time>0?1:0;
                     this.simpTxt = [
                         {p:'CAUGHT YOU FINALLY'},
