@@ -234,7 +234,7 @@ class Render{
         );
         this.ctx.globalAlpha = 1;
     }
-    Text(str, xs, ys, size, sc, col, bx,sh=1, hl) {
+    Text(str, xs, ys, size, sc, col, bx) {
 
         str = !isNaN(str) ? ""+str : str;
         this.ctx.fillStyle = col || '#fff';
@@ -246,7 +246,7 @@ class Render{
             var xp = 0;
             var yp = 0;
             var mx = 0; 
-            var sdw = sh?size:0;
+
             var chr = str.charAt(i);
             if(chr == '|' || bx && xs>bx && (chr==',' || chr==' '))
             {
@@ -267,9 +267,6 @@ class Render{
                         var szx = (sc && c==row.length-1) ? size*2 : size;
                         var szy = (sc && r==l.length-1) ? size*2 : size;
                         if (row[c]) {
-                            this.ctx.fillStyle = 'rgba(0,0,0,.6)';
-                            this.ctx.fillRect(Math.round(xp + xs), Math.round(yp + ys), szx, szy+sdw);
-                            this.ctx.fillStyle = hl&&r<1 ? hl : col || '#fff';
                             this.ctx.fillRect(Math.round(xp + xs), Math.round(yp + ys), szx, szy);
                         }
                         xp += szx;
@@ -280,7 +277,7 @@ class Render{
                     chrSize.y += szy;
                 }
                 length.x += chrSize.x + size;
-                length.y = chrSize.y+sdw;
+                length.y = chrSize.y;
 
                 xs += mx + size; 
             }

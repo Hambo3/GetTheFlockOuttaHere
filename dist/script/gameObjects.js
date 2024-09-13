@@ -35,17 +35,17 @@ class Color
 }
 
 class TextSprite{
-    constructor(txt, size, style, col, sh=0, col2){
+    constructor(txt, size, style, col){
         this.enabled = 1;
         
         this.g = SUtil.Context();
         this.rend = new Render(this.g.ctx);
         this.size;	
-        this.Create(txt, size, style, col, sh, col2);
+        this.Create(txt, size, style, col);
     }
 
-    Create(txt, size, style, col, sh=0, col2){
-        this.size = this.rend.Text(txt, 0, 0 ,size, style, col,0,sh,col2); 
+    Create(txt, size, style, col){
+        this.size = this.rend.Text(txt, 0, 0 ,size, style, col); 
     }
 
     get TextImg(){

@@ -22,9 +22,9 @@ class Game{
 
         this.creds = Factory.Credits();
         this.introText = [
-            {y:-200, timer:new Timer(0.6), text:new TextSprite("GET THE FLOCK", 4, 1, "#ff0",1,"#fc0")},
-            {y:-126,timer:new Timer(0.8), text:new TextSprite("OUTTA", 6, 1, "#ff0",1,"#fc0")},
-            {y:-40,timer:new Timer(1), text:new TextSprite("HERE", 6, 1, "#ff0",1,"#fc0")}
+            {y:-200, timer:new Timer(0.6), text:new TextSprite("GET THE FLOCK", 4, 1, "#ff0")},
+            {y:-126,timer:new Timer(0.8), text:new TextSprite("OUTTA", 6, 1, "#ff0")},
+            {y:-40,timer:new Timer(1), text:new TextSprite("HERE", 6, 1, "#ff0")}
         ];
 
         this.titlebgc=0;
@@ -618,7 +618,7 @@ class Game{
         if(this.M &&  s){
             this.score+=s;
             this.calls.push({p:Util.IsoPoint(p.x, p.y-32),
-                tx:new TextSprite(s, 3, 0, "#0ff",1),tm:new Timer(3)});            
+                tx:new TextSprite(s, 3, 0, "#0ff"),tm:new Timer(3)});            
         }
     }
 
@@ -643,10 +643,10 @@ class Game{
     {
 
         //shut that infernal racket
-if(Input.IsSingle('q') ) {
-    MUSIC.Stop(1);	
-    this.plays=3;
-}
+// if(Input.IsSingle('q') ) {
+//     MUSIC.Stop(1);	
+//     this.plays=3;
+// }
 
         MUSIC.Update(dt);
 
@@ -662,12 +662,7 @@ if(Input.IsSingle('q') ) {
                 this.simpIx++;
                 if(this.simpIx==this.simpTxt.length){
 
-                    if(this.pending==-1){
-                        this.M = 1;
-                        MAP.scale = 1.1; //??
-                        this.bg = 0; 
-                    }
-                    else if(this.pending==-2){
+                    if(this.pending==-2){
                         this.M = 2;
                         MAP.scale = 1.1; //??
 
@@ -705,7 +700,7 @@ if(Input.IsSingle('q') ) {
             else{
                 if(Util.OneIn(500)){
                     var b = this.O.Get([1]);
-                    if(b.length && !b[0].target)b[0].target = {pos:b[0].pos.Clone().AddXY(250,0)};
+                    if(b.length && !b[0].target)b[0].target = {pos:b[0].pos.Clone().AddXY(240,0)};
                 }
                 if(Input.Space()){
                     if(this.titlesct){
@@ -896,7 +891,7 @@ this.player.action = 1;//C.DIR.DOWN;
                     var p = Actors[this.plrselect];
                     var b = Factory.Head(p.c, p.d);
                     SFX.Polygon(16, 30+ob, b.src, b.col, {x:.8,y:.8,z:1.6}, 0);
-                    SFX.Text(this.score,440,10+ob,4,0,0,0,0);  
+                    SFX.Text(this.score,440,10+ob,4,0);  
                     
                     var b = Factory.Sheep(9);//C.col.sheep
                     var g = this.mapId==1 ? {s:b[1][0].src, c:b[1][0].col} 
@@ -966,7 +961,7 @@ this.player.action = 1;//C.DIR.DOWN;
                         var h = Factory.Head(a.c, a.d);
                         SFX.Polygon(48, 132, h.src, h.col, {x:2,y:2,z:4}, 0);
                         SFX.Text(this.player.name, 116,50, 4,0,'#0dd', 700);
-                        SFX.Text(e.p.replace('{p}', this.player.name).replace('{n}', this.player.gen||'NO'), 116,80, 5,0,'#0ff', 700);
+                        SFX.Text(e.p, 116,80, 5,0,'#0ff', 700);
                     }
 
                     SFX.Text(this.btn,280,560,4,0);
@@ -1069,9 +1064,6 @@ this.player.action = 1;//C.DIR.DOWN;
             }
 
             if(this.titlebgc>1){
-                if(!this.titlesct){
-                    SFX.Text("-1.1",530,284,2,0, '#ee0');   
-                }
                 SFX.Text(this.btn+" TO START",280,560,4,0);   
             }
         }

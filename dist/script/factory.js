@@ -1,43 +1,5 @@
 //factory
 
-//var C = {   
-    // MODE:{
-    //     TITLE:0,
-    //     GAME:1,
-    //     GINTRO:2,
-    //     WIN:3,
-    //     WON:4,        
-    //     LOSE:5,
-    //     LOST:6,
-    //     SIMP:7
-    // },
-    // col:{
-    //     title:5,  
-    //     shadow:4,
-    //     tree:6,
-    //     splash:5,
-    //     red:3,
-    //     sheep:9,
-    //     hat:8
-    //}//, 
-    // ASSETS:{
-    //     PLAYER:0,
-    //     SHEEP:1,
-    //     PPL:2,
-    //     TREE:3,
-    //     GRUNT:4,
-    //     SPLASH:5,
-    //      PLANT:6,
-    //        THIEF:7
-    //      TRANY:8
-    //}//,    
-    // DIR:{
-    //     UP:0,
-    //     DOWN:1,
-    //     LEFT:2,
-    //     RIGHT:3
-    //}
-//}
 
 var converations = [
     [
@@ -47,20 +9,7 @@ var converations = [
         {s:'THATS RIGHT, AND ITS BAD LUCK TO HAVE 13 SHEEP ON THE LOOSE'},
         {p:'THATS A STRETCH BUT OK, ILL DO IT'}
     ],
-    [   
-        {s:'HI MY NAME IS JANE, WHAT ARE YOUR PRONOUNS?'},
-        {p:'HI, MY NAME IS {p} AND I HAVE {n} PRONOUNS'},
-        {s:'THATS GREAT, THANK YOU FOR THAT'},        
-        {s:'AND MY PRONOUNS ARE THEY/THEM'},
-        {s:'DO YOU CONSENT TO ME ASKING YOU SOMETHING'},
-        {p:'YES THATS FINE'},
-        {s:'THATS SO AWESOME'},
-        {s:'AND I GIVE CONSENT FOR YOU TO HELP ME'},
-        {p:'FANTASTIC, NOW HOW CAN I HELP'},
-        {s:'WELL, MY CAT IS STUCK IN THIS...'},
-        {s:'OH WAIT, HES GOT DOWN NOW BY HIMSELF'},
-        {p:'BYE'}
-    ],
+    [],
     [
         {s:'HI'},
         {p:'HOW CAN I HELP'},
@@ -92,9 +41,7 @@ var DEF = {
         {//title
             world:[30, 30,0],
             start:null,
-            shp:[{x:14, y:12,s:60,t:6},
-                {x:13, y:12,s:60}
-            ],
+            shp:[{x:14, y:12,s:60,t:6}],
             tr:[24,[2,3,4]],
             fr:1,
             end:null,
@@ -117,7 +64,6 @@ var DEF = {
                 {r:7,act:7,lvl:2},//tree game
                 {r:5,act:8,lvl:3},//a pair of nickers
                 {r:3,act:9,lvl:4},//run tony run
-                {r:6,act:11,lvl:-1},
                 {p:{x:40, y:119},act:10,lvl:-2}//intro
             ],
             end:{x:38, y:8,t:1},
@@ -246,12 +192,6 @@ var Actors = [
         c:[0,4,0,2,1,1],
         d:{l:1.2,f:1.2,h:1.2,b:1,m:3,w:1,t:0},
         call:["HEY"]
-    },
-    {
-        n:"JANE",
-        c:[0,1,1,2,0,0],
-        d:{l:1,f:1,h:1,b:0,m:2,w:2,t:0},
-        call:["HI"]
     }
 
 ];
@@ -1076,13 +1016,6 @@ var FONT = {
 [, ,],
 [ ,,1],
 [,1,]
-],
-'-': [
-[, ,],
-[, ,],
-[1,1,1],
-[ ,,],
-[,,]
 ],
 "'": [
 [,1,],
