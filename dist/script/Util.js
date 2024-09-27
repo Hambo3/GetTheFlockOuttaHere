@@ -1,4 +1,5 @@
 //util
+
 var Easing = {
     // elastic bounce effect at the beginning and end
     eInOutE: function (t) { return (t -= .5) < 0 ? (.01 + .01 / t) * Math.sin(50 * t) : (.02 - .01 / t) * Math.sin(50 * t) + 1 }

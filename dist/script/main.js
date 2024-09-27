@@ -5,7 +5,6 @@
 //https://xem.github.io/articles/jsgamesinputs.html
 //https://xem.github.io/js13k-pack/
 
-
 var rf = (function(){
   return requestAnimationFrame;
 })();

@@ -1,3 +1,4 @@
+
 class KeyInput{
     
     static pres = [];//pressed

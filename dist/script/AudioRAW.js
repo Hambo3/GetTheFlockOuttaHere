@@ -22,6 +22,7 @@ var TinySound = function (s) {
       }
     }
   
+    
     var ShitMusic = function () {
       
       var score = [0,2,3,4,2,3];
