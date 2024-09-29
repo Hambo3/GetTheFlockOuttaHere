@@ -31,7 +31,49 @@ class KeyInput{
     }
 }
 
-class TouchPad extends KeyInput{
+class GamePad extends KeyInput{
+    static pads = () => (navigator.getGamepads ? Array.from(navigator.getGamepads()) : []).filter(x => !!x);
+
+    static bpres = [];
+    static meta = [
+        {i:1,v:-1,b:12},
+        {i:1,v:1,b:13},
+        {i:0,v:-1,b:14},
+        {i:0,v:1,b:15}];
+
+    static Btn(i, p, h) {
+        const pads = this.pads();        
+        try {
+            var s = pads[p].buttons[i].pressed;
+            var d = (h&&s) || (s && (this.bpres[i+10] != s));
+            this.bpres[i+10] = s;
+            return d;
+        } catch (e) {}
+    };
+
+    static Joy(p, i, h){
+        var m = this.meta[i];
+        var s = this.Pad(m.i,m.v, p) || this.Btn(m.b, p, h);
+        var d = (h&&s) || (s && (this.bpres[i] != s));
+        this.bpres[i] = s;
+        return d;
+    }
+
+    static Pad (i, v, p) {
+        const pads = this.pads();
+        try {
+            if (Math.abs(v - pads[p].axes[i]) < 0.5) {
+                return true;
+            }
+        } catch (e) {}
+    };
+
+    static Pads(){
+        return this.pads();
+    }
+}
+
+class TouchPad extends GamePad{
     static TouchEnabled = false;
     static tpres = [];
 
@@ -116,14 +158,14 @@ class TouchPad extends KeyInput{
 }
 
 class Input extends TouchPad{
-    static Up(){return this.Touching(0) || this.IsDown('w','ArrowUp')}
-    static Down(){return this.Touching(1) || this.IsDown('s','ArrowDown')}
-    static Left(){return this.Touching(2) || this.IsDown('a','ArrowLeft')}
-    static Right(){return this.Touching(3) || this.IsDown('d','ArrowRight')}
-    static Fire1(){return this.Touching(4) || this.IsSingle(' ')}
-    static LeftS(){return this.Touched(2) || this.IsSingle('a') || this.IsSingle('ArrowLeft')}
-    static RightS(){return this.Touched(3) || this.IsSingle('d') || this.IsSingle('ArrowRight')}
-    static Space(){return this.Touched(4) || this.IsSingle(' ')}
+    static Up(){return this.Touching(0) || this.IsDown('w','ArrowUp') || this.Btn(1,0) || this.Joy(0,0,1)}
+    static Down(){return this.Touching(1) || this.IsDown('s','ArrowDown') || this.Joy(0,1,1)}
+    static Left(){return this.Touching(2) || this.IsDown('a','ArrowLeft') || this.Joy(0,2,1)}
+    static Right(){return this.Touching(3) || this.IsDown('d','ArrowRight') || this.Joy(0,3,1)}
+    static Fire1(){return this.Touching(4) || this.IsSingle(' ') || this.Btn(0,0)}
+    static LeftS(){return this.Touched(2) || this.IsSingle('a') || this.IsSingle('ArrowLeft') || this.Joy(0,2,0)}
+    static RightS(){return this.Touched(3) || this.IsSingle('d') || this.IsSingle('ArrowRight') || this.Joy(0,3,0)}
+    static Space(){return this.Touched(4) || this.IsSingle(' ') || this.Btn(0,0)}
 }
 
 

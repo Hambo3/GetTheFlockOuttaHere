@@ -416,6 +416,23 @@ class Gunt extends Dood {
     Play(){
        //AUDIO.Play(1);
     }
+    Poop(d){
+        var p = this.pos.Clone();  
+        if(d.up){
+            p.y+=16;//C.DIR.UP;
+        }
+        else if(d.down){
+            p.y-=16;//C.DIR.DOWN;
+        }
+        else if(d.left){
+            p.x+=16;//C.DIR.LEFT;
+        }
+        else if(d.right){
+            p.x-=16;;//C.DIR.RIGHT;
+        }
+
+        GAME.Poop(p,d);     
+    }
     Update(dt){
         this.ct.Update(dt);
         var d = {
@@ -460,8 +477,13 @@ class Gunt extends Dood {
                 var m2 = this.type==1?11:999;
 
                 if(d.d <4*32 || d.d > m*32){
+                    if(this.type==1 && Util.OneIn(3500))
+                        {
+                            this.Poop(d);
+                        }
                     if(d.d >m*32 && d.d<m2*32){
                         this.Point(d);
+
                     }
                     if(this.type==7)this.action = 1;//C.DIR.DOWN;
                     d = {
@@ -535,6 +557,7 @@ class Grunt extends GameObjectBase {
         this.static = st;
         this.found = 1;
         this.follow = 1;
+        this.permanent = 0;
     }
 
     Collider(perp){
@@ -553,12 +576,63 @@ class Grunt extends GameObjectBase {
             if(this.z<0){
                 this.zV = 0;
                 this.V = null;
-                this.enabled = 0;
+                this.enabled = this.permanent;
             }
         }
 
         if(this.V){
             this.pos.AddXY(this.V.x*dt, this.V.y*dt);
+        }        
+    }
+}
+
+class Wheelchairguy extends Dood {
+    
+    constructor(pos, def, bdy, sz, lvl)
+    {
+        super(pos, 2);//wheelchair guy);
+
+        this.bounds = {t:12,b:12,l:12,r:12};
+        this.hits = [
+            {r:16,pos:new Vector2(0,0)}
+        ];
+        this.target;
+        this.name = def.n;
+        this.level = lvl;
+        this.activated = 0;
+        this.active = 0;
+        this.body = bdy; 
+        this.size = sz;
+        this.shadow = 0;
+        this.velocity = new Vector2(0,10);
+        this.timeAlive = 0;
+    }
+
+    Update(dt){
+        if(this.target){
+            var d = GOUtil.Dir(this.target.pos,this.pos);
+
+            if(!this.active && d.d<11*32){
+                this.Point(d);
+            }  
+
+            if(!this.activated && d.d < 3*32){
+                this.activated = 1;
+                this.action = 1;//C.DIR.DOWN;
+                GAME.Score(50, this.pos.Clone().AddXY(0,-32));//speak to nob
+                GAME.NextLvl(this.level, this.pos, this.name);
+            } 
+        }
+
+        if(this.active && this.velocity){
+            this.pos.AddXY(this.velocity.x*dt, this.velocity.y*dt);
+            this.velocity.y*=1.004;
+            this.action = 0;//C.DIR.UP;
+            this.timeAlive+=dt;
+            this.Dth();
+            if(!this.enabled){
+                GAME.Score((this.timeAlive|0)*100, this.pos.Clone().AddXY(0,-32));//speak to nob
+            }
         }        
     }
 }

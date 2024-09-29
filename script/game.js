@@ -19,7 +19,8 @@ class Game{
         this.O = new ObjectPool(); 
         this.calls = [];
         this.mapId = 0;
-
+        this.zoomout=0;
+        this.screenshot = 0;
         this.creds = Factory.Credits();
         this.introText = [
             {y:-200, timer:new Timer(0.6), text:new TextSprite("GET THE FLOCK", 4, 1, "#ff0",1,"#fc0")},
@@ -30,7 +31,7 @@ class Game{
         this.titlebgc=0;
         this.titlebg=new Color("#000",1);
         this.titlesct = 0;
-
+        this.specialNpc = null;
         this.plrselect = 0;
         this.plots = [];//lvl2 data
         this.bg = 0;      
@@ -78,22 +79,21 @@ class Game{
         
 
         var dd = d<1500?10:60;
-            for (let i = 0; i < dd; i++) {	
-                var f = [
-                    [0,0,7,7,7,7,0,0],
-                    [0,7,7,7,7,7,7,0],
-                    [7,7,8,8,7,7,7,7],
-                    [7,7,8,8,7,7,7,7],
-                    [0,7,7,7,7,7,7,0],
-                    [0,0,7,7,7,7,0,0]
-                    ];
+        for (let i = 0; i < dd; i++) {	
+            var f = [
+                [0,0,7,7,7,7,0,0],
+                [0,7,7,7,7,7,7,0],
+                [7,7,8,8,7,7,7,7],
+                [7,7,8,8,7,7,7,7],
+                [0,7,7,7,7,7,7,0],
+                [0,0,7,7,7,7,0,0]
+                ];
 
-                var ylength = ((f.length)/2)|0;
-                var xlength = ((f[0].length)/2)|0;
+            var ylength = ((f.length)/2)|0;
+            var xlength = ((f[0].length)/2)|0;
 
-                this.Feature(data, f, Util.RndI(o+1+xlength, cols-xlength), Util.RndI(1+ylength, rows-ylength),Util.RndI(1,3),Util.RndI(1,3));
-            }
-        //}
+            this.Feature(data, f, Util.RndI(o+1+xlength, cols-xlength), Util.RndI(1+ylength, rows-ylength),Util.RndI(1,3),Util.RndI(1,3));
+        }
 
 
         for (let i = 0; i < mapDef.tr[0]; i++) {	
@@ -146,6 +146,38 @@ class Game{
                 this.Feature(data, sfeature[mapDef.shp[i].t||2], mapDef.shp[i].x, mapDef.shp[i].y);
             }
         }
+
+        if(mapDef.car){
+            for (let i = 0; i < mapDef.car.length; i++) {
+                this.Feature(data, sfeature[10], mapDef.car[i].x, mapDef.car[i].y);
+            }
+        }
+
+        if(mapDef.ppl)
+        {
+            var col = mapDef.world[0];
+            var row = mapDef.world[1];
+            var r = (row/mapDef.gr[1]);
+            for (let i = 0; i < mapDef.ppl.length; i++) {
+                if(mapDef.ppl[i].fr!=undefined){
+                    var ft = sfeature[mapDef.ppl[i].fr];
+                    var ys = ((ft.length)/2)|0;
+                    var xs = ((ft[0].length)/2)|0;
+
+                    var x = Util.RndI(2+xs, col-mapDef.world[2]-2-xs-3);
+                    var y = ((mapDef.ppl[i].r*r)+(r/2))|0;
+
+                    var p = new Vector2(mapDef.world[2]+x, y);
+                    mapDef.ppl[i].p = p.Clone();   
+                    this.Feature(data, ft, p.x+mapDef.ppl[i].fx, p.y+mapDef.ppl[i].fy); 
+                    if(mapDef.ppl[i].fr2!=undefined){
+                        this.Feature(data, sfeature[mapDef.ppl[i].fr2], p.x+mapDef.ppl[i].fx2, p.y+mapDef.ppl[i].fy2); 
+                    }
+                }
+
+            }
+        }
+
         return data;
     }
 
@@ -159,12 +191,20 @@ class Game{
             for(var c = 0; c < col; c++) 
             {
                 var p = map.data[r][c];                
-                if(p==4){
+                if(p==4 ){
                     var sz = Util.Rnd(1)+0.8;
                     obj.push(
                         new Grunt(new Vector2((c*32)+16, (r*32)+16),
                         [[{src:Util.OneOf([assetstree1,assetstree2]), col:6}]],//C.col.tree
                         3,{x:sz,y:sz,z:sz},0,0));
+                }
+                if(p==10 || p==11){
+                    var sz = 1;
+                    var g = new Grunt(new Vector2((c*32)+16, (r*32)+16),
+                        [[{src:p==10?fenceh:fencev, col:2}]],//C.col.tree
+                        3,{x:sz,y:sz,z:sz},0,0);
+                    g.shadow = 0;    
+                    obj.push(g);
                 }
             }
         }
@@ -205,15 +245,21 @@ class Game{
                         var x = Util.RndI(2, col-map.world[2]-2);
                         var y = ((map.ppl[i].r*r)+(r/2))|0;
                         var m = map.data[y][x+map.world[2]];
-                    }while (m!=0);
+                    }while ([0,8,9].indexOf(m)==-1);
                     p = new Vector2(map.world[2]+x, y).Add(0.5).Multiply(32);                    
                 }
 
                 var d = Actors[map.ppl[i].act];
                 
-                obj.push(
-                    new Gunt(p, 2, d, Factory.Man(d.c, d.d), map.ppl[i].lvl)//C.ASSETS.PPL
-                );
+                var g;
+                if(d.d.t==1){
+                    g = new Wheelchairguy(p, d, Factory.Man(d.c, d.d), {x:1,y:1,z:1}, map.ppl[i].lvl);
+                    this.specialNpc = g;
+                }
+                else{
+                    g = new Gunt(p, 2, d, Factory.Man(d.c, d.d), map.ppl[i].lvl)//C.ASSETS.PPL
+                }
+                obj.push(g);
             }
         }
 
@@ -259,12 +305,23 @@ class Game{
                     var gy = y/(row/map.gr[1])|0;
                     var m = map.data[y][x+map.world[2]];
                     var b = gps.filter(f=>f.x == gx && f.y == gy).length;
-                }while (m!=0 || b>0);
+                }while ([0,8,9].indexOf(m)==-1
+                    || b>0);
 
                 var s = this.Sheep(map.world[2]+x, y, SheepActors[SINDEX++]);
 
                 obj.push(s);
                 gps.push({x:gx,y:gy});
+            }
+        }
+
+        if(map.car){
+
+            for (var i=0; i < map.car.length; i++) {
+                obj.push(
+                    new Grunt(new Vector2((map.car[i].x*32)+16, (map.car[i].y*32)+16),
+                    [[{src:car, col:15}]],//C.col.tree
+                    3,{x:2,y:1.5,z:1.5},0,0));
             }
         }
         return obj;
@@ -295,25 +352,26 @@ class Game{
                     var p = Util.OneOf(this.plots.filter(l => !l.a));
                     var t = Util.OneOf(this.plots.filter(l => l.a));
                     this.introEvents = [
-                        {t:4, p: new Vector2(map.start.x*32, map.start.y*32), tx:"'THE SHEEP CRISIS'",s:7,c:5,x:100},
-                        {t:3, p: p.p, tx:'PLANT FLOWERS '+this.btn},
-                        {t:3, p: t.p, tx:'KEEP SHEEP AWAY'},
-                        {t:3, p: new Vector2(map.start.x*32, map.start.y*32), tx:'SAVE THE PLANET!',s:6}
+                        {t:3, p: new Vector2(map.start.x*32, map.start.y*32), tx:"'THE SHEEP CRISIS'",s:7,c:5,x:100},
+                        {t:2, p: p.p, tx:'PLANT FLOWERS '+this.btn},
+                        {t:2, p: t.p, tx:'KEEP SHEEP AWAY'},
+                        {t:2, p: t.p, tx:'BEFORE TIME RUNS OUT!'},
+                        {t:2, p: new Vector2(map.start.x*32, map.start.y*32), tx:'SAVE THE PLANET!',s:6}
                     ];
                 }                
                 if(id==3){
                     this.introEvents = [
-                        {t:4, p: new Vector2(map.start.x*32, map.start.y*32), tx:"'A PAIR OF NICKERS'",s:7,c:5,x:100},
-                        {t:3, p: new Vector2((map.start.x+12)*32, map.start.y*32), tx:'STOP THE THIEVES'},
-                        {t:3, p: new Vector2(map.end.x*32, map.end.y*32), tx:'BEFORE THEY GET AWAY'},
-                        {t:3, p: new Vector2(map.start.x*32, map.start.y*32), tx:'GO GETTEM',s:6}
+                        {t:3, p: new Vector2(map.start.x*32, map.start.y*32), tx:"'A PAIR OF NICKERS'",s:7,c:5,x:100},
+                        {t:2, p: new Vector2((map.start.x+12)*32, map.start.y*32), tx:'STOP THE THIEVES'},
+                        {t:2, p: new Vector2(map.end.x*32, map.end.y*32), tx:'BEFORE THEY GET AWAY'},
+                        {t:2, p: new Vector2(map.start.x*32, map.start.y*32), tx:'GO GET EM',s:6}
                     ];
                 }
                 if(id==4){
                     this.introEvents = [
-                        {t:4, p: new Vector2(map.start.x*32, (map.start.y*32)-80), tx:"'RUN '"+this.player.name+"' RUN'",s:7,c:5,x:100},
-                        {t:3, p: new Vector2(map.end.x*32, (map.end.y*32)-80), tx:'GET HOME'},
-                        {t:3, p: new Vector2(map.start.x*32, (map.start.y*32)-80), tx:'RUN FOR YOUR LIFE!',s:5,x:100}
+                        {t:3, p: new Vector2(map.start.x*32, (map.start.y*32)-80), tx:"'RUN '"+this.player.name+"' RUN'",s:7,c:5,x:100},
+                        {t:2, p: new Vector2(map.end.x*32, (map.end.y*32)-80), tx:'GET HOME'},
+                        {t:2, p: new Vector2(map.start.x*32, (map.start.y*32)-80), tx:'RUN FOR YOUR LIFE!',s:5,x:100}
                     ];
                 }
             }
@@ -411,7 +469,7 @@ class Game{
                     this.simpTxt = [
                         {p:'CAUGHT YOU FINALLY'},
                         {s:'YOU WILL NEVER TAKE US ALIVE'},
-                        {p:'TAKE THIS...'},
+                        {p:'HERE TAKE THIS...'},
                         {p:'NICE BUNCH OF FLOWERS'},
                         {s:'OH THATS SO KIND'},
                         {s:'WERE SO SORRY, HERES YOUR PUMPKINS BACK'}
@@ -555,7 +613,7 @@ class Game{
         this.pending = 0;
 
         this.lvlTm = DEF.maps[this.mapId].tme ? new Timer(DEF.maps[this.mapId].tme) : null;
-
+        this.zoomout=0;
     }
 
     Quit(){
@@ -585,7 +643,7 @@ class Game{
                 n:"",
                 c:[Util.RndI(0,2),Util.RndI(0,5),Util.RndI(0,3),Util.RndI(0,4),Util.RndI(0,1),Util.RndI(0,3)],
                 d:{l:1.2,f:1.1,h:1.1,b:Util.RndI(0,2),m:Util.RndI(0,4),w:Util.RndI(0,3),t:0},
-                call:["GETTEM","ATTACK"]
+                call:["GET EM","ATTACK","NOT SIR"]
             }
 
         var o = new Gunt(p, 8, d, Factory.Man(d.c, d.d), 0)//C.ASSETS.TRANY;
@@ -593,6 +651,36 @@ class Game{
         o.speed = 30;
         o.accel = Util.RndI(s1, s2);
         return o;
+    }
+    Poop(pos, d){
+        for(var i=0;i<8;i++){    
+            var v = new Vector2(Util.Rnd(64)-32, Util.Rnd(64)-32);
+            if(d.up){
+                v.x=Util.Rnd(16)-8;
+                v.y=Util.Rnd(16);
+            }
+            else if(d.down){
+                v.x=Util.Rnd(16)-8;
+                v.y=-Util.Rnd(16);
+            }
+            else if(d.left){
+                v.x=Util.Rnd(16);
+                v.y=Util.Rnd(16)-8;
+            }
+            else if(d.right){
+                v.x=-Util.Rnd(16);
+                v.y=Util.Rnd(16)-8;
+            }
+            var b = new Grunt(pos.Clone(),
+                        [[{src:assetsblock, col:14}]],//C.col.splash
+                        5,//C.ASSETS.SPLASH,
+                        {x:0.1,y:0.1,z:0.1},
+                        v);
+            b.zV = 100;  
+            b.z=16;     
+            b.permanent = 1;
+            this.O.Add(b);
+        }
     }
     Splash(pos){
         for(var i=0;i<16;i++){    
@@ -645,9 +733,11 @@ class Game{
         //shut that infernal racket
 if(Input.IsSingle('q') ) {
     MUSIC.Stop(1);	
-    this.plays=3;
+    //=3;
 }
-
+if(Input.IsSingle('p') ) {
+   this.screenshot = !this.screenshot;
+}
         MUSIC.Update(dt);
 
         this.gameTimer.Update(dt);        
@@ -662,9 +752,17 @@ if(Input.IsSingle('q') ) {
                 this.simpIx++;
                 if(this.simpIx==this.simpTxt.length){
 
-                    if(this.pending==-1){
+                    if(this.pending==5 ){
                         this.M = 1;
-                        MAP.scale = 1.1; //??
+                        //MAP.scale = 1.1; //??
+                        this.zoomout=1.1;
+                        this.bg = 0; 
+                        this.specialNpc.active = 1;                        
+                    }
+                    else if(this.pending==-1 ){
+                        this.M = 1;
+                        //MAP.scale = 1.1; //??
+                        this.zoomout=1.1;
                         this.bg = 0; 
                     }
                     else if(this.pending==-2){
@@ -675,12 +773,12 @@ if(Input.IsSingle('q') ) {
                         var smp = this.O.Get([2]);//C.ASSETS.PPL
                         this.introEvent = 0;
                         this.introEvents = [
-                            {t:4, p: new Vector2(DEF.maps[this.mapId].start.x*32, DEF.maps[this.mapId].start.y*32), tx:"'O'SHEA'S 13'",s:7,c:5,x:180},
-                            {t:3, p: new Vector2(DEF.maps[this.mapId].start.x*32, DEF.maps[this.mapId].start.y*32), tx:'GET SHEEP'},
-                            {t:3, p: new Vector2(DEF.maps[this.mapId].end.x*32, DEF.maps[this.mapId].end.y*32), tx:'BRING HOME'},
-                            {t:3, p: shp[3].pos, tx:'COLLECT STRAYS'},
-                            {t:3, p: smp[0].pos, tx:'HELP STRANGERS'},
-                            {t:3, p: new Vector2(DEF.maps[this.mapId].start.x*32, DEF.maps[this.mapId].start.y*32), tx:'GO!',s:6}
+                            {t:3, p: new Vector2(DEF.maps[this.mapId].start.x*32, (DEF.maps[this.mapId].start.y-8)*32), tx:"'O'SHEA'S 13'",s:7,c:5,x:180},
+                            {t:1.4, p: new Vector2(DEF.maps[this.mapId].start.x*32, DEF.maps[this.mapId].start.y*32), tx:'GET SHEEP'},
+                            {t:2.6, p: new Vector2(DEF.maps[this.mapId].end.x*32, DEF.maps[this.mapId].end.y*32), tx:'BRING HOME'},
+                            {t:2, p: shp[3].pos, tx:'COLLECT STRAYS'},
+                            {t:2, p: smp[0].pos, tx:'HELP STRANGERS'},
+                            {t:2, p: new Vector2(DEF.maps[this.mapId].start.x*32, DEF.maps[this.mapId].start.y*32), tx:'GO!',s:6}
                         ];
                         this.gameTimer = new Timer(this.introEvents[this.introEvent].t);
 
@@ -755,7 +853,9 @@ if(Input.IsSingle('q') ) {
                     this.gameTimer = new Timer(this.introEvents[this.introEvent].t);                                        
                 }
             }
-            if(this.mapId==1 && this.plays>2 && Input.Space()){
+            //reduce the number of plays before skip is activated
+            //due to moaning
+            if(this.mapId==1 && this.plays>0 && Input.Space()){
                 if(this.music){
                     MUSIC.Play();
                 }
@@ -765,6 +865,13 @@ if(Input.IsSingle('q') ) {
         //if(this.M == C.MODE.GAME || this.M == C.MODE.TITLE || this.M == C.MODE.WIN || this.M == C.MODE.LOSE || this.M == C.MODE.SIMP){
         if(this.M == 1 || this.M == 0 || this.M == 3 || this.M == 5 || this.M == 7){ 
 
+            if(this.zoomout){
+                this.Zoom(1, this.player.pos, 0.01);
+                if(MAP.scale>this.zoomout){
+                    MAP.scale = this.zoomout;
+                    this.soomout = 0;
+                }
+            }
             if(this.pause){
                 if(Input.Fire1() ) {
                     this.pause = 0;
@@ -806,7 +913,9 @@ this.player.action = 1;//C.DIR.DOWN;
                     this.Zoom(0, this.player.pos, 0.02);
                 }
                 else if (this.M == 1 ){//C.MODE.GAME
+                    //if(!this.screenshot){
                     MAP.ScrollTo(this.player.pos, 0.02); 
+                    //}
 
                     if(!this.player.enabled){ //plr dies
                         this.End(0);
@@ -891,6 +1000,7 @@ this.player.action = 1;//C.DIR.DOWN;
             if(this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6 || this.M == 7){
                 
                 if(this.M == 1 || this.M == 3 || this.M == 4 || this.M == 5 || this.M == 6){
+                    //score banner
                     var ob = this.mob?40:0;
                     SFX.Box(0,0, 800, 40+ob ,"rgba(0,0,0,0.6)");
                     var p = Actors[this.plrselect];
@@ -916,58 +1026,74 @@ this.player.action = 1;//C.DIR.DOWN;
                         }
                     }
 
+                    if(this.screenshot){
+                        SFX.Text('S',740,10+ob,4,0,0,0,0);  
+                    }
                 }
                 if(this.lvlTm){
                     SFX.Text(this.lvlTm.time|0,640,100,this.lvlTm.time<10?8:6,1,this.lvlTm.time<10?"#f00":"#ff0");  
+                    
+                    SFX.Text(this.mapId==2 ? 'TIME LEFT' : 'TIME TILL GETAWAY CAR', 
+                        this.mapId==2 ? 480 : 280, 116,4,0,this.lvlTm.time<10?"#f00":"#ff0");  
+                }
+
+                if(this.specialNpc.enabled && this.specialNpc.active){
+                    SFX.Text(this.specialNpc.timeAlive|0,640,100,6,1,"#ff0");  
+                    
+                    SFX.Text('TIME SURVIVED', 420, 116,4,0,"#ff0");  
                 }
                 if(this.M == 7){//C.MODE.SIMP
-                    this.BG(0, 0.6, this.bg);
+                    if(!this.screenshot)
+                    {
+                        this.BG(0, 0.6, this.bg);
 
-                    var e = this.simpTxt[this.simpIx];
-                    if(e.s){   
-                        var a = Actors.find((e) => e.n == this.bonusn);
-                       
-                        if(!a){
-                            a = Supporting.find((e) => e.n == this.bonusn);
-                        }
-                        if(a){
-                            var h = Factory.Head(a.c, a.d);
-                            SFX.Polygon(48, 132, h.src, h.col, {x:2,y:2,z:4}, 0); 
-                        }           
-                        if(this.bonusn){
-                            SFX.Text(this.bonusn, 116,50, 4,0,'#dd0', 600);
-                        }
-                        if(e.ns){
-                            var t=e.ns;
-                            var x = 220;
-                            SFX.Text(e.s, 300,200, 7,0,'#ff0', 600);
-
-                            SFX.Text(e.ns, x,260, 6,0,'#ff0', 600);
-                            x+=66;
-                            var b = Factory.Sheep(9);//C.col.sheep
-                            SFX.Polygon(x, 292, b[1][0].src, b[1][0].col, {x:1.2,y:1.2,z:1.2}, 0);
-                            x+=40;
-                            
-                            if(e.ex){
-                                t*=e.ex;
-                                SFX.Text('X '+e.ex, x,260, 6,0,'#ff0', 600);x+=100;
-       
-                                SFX.Polygon(x, 292, assetstree2, 12, {x:.8,y:.8,z:.8}, 0);
-                                x+=40;
+                        var e = this.simpTxt[this.simpIx];
+                        if(e.s){   
+                            var a = Actors.find((e) => e.n == this.bonusn);
+                        
+                            if(!a){
+                                a = Supporting.find((e) => e.n == this.bonusn);
                             }
-                            t*=e.v;
-                            SFX.Text('X '+e.v+' = '+t, x,260, 6,0,'#ff0', 600);x+=40;
-                        }
-                        else{
-                            SFX.Text(e.s, 116,80, 5,0,'#ff0', 600);
-                        }
-                    }else{
-                        var a = Actors[this.plrselect];
-                        var h = Factory.Head(a.c, a.d);
-                        SFX.Polygon(48, 132, h.src, h.col, {x:2,y:2,z:4}, 0);
-                        SFX.Text(this.player.name, 116,50, 4,0,'#0dd', 700);
-                        SFX.Text(e.p.replace('{p}', this.player.name).replace('{n}', this.player.gen||'NO'), 116,80, 5,0,'#0ff', 700);
+                            if(a){
+                                var h = Factory.Head(a.c, a.d);
+                                SFX.Polygon(48, 132, h.src, h.col, {x:2,y:2,z:4}, 0); 
+                            }           
+                            if(this.bonusn){
+                                SFX.Text(this.bonusn, 116,50, 4,0,'#dd0', 600);
+                            }
+                            if(e.ns){
+                                var t=e.ns;
+                                var x = 220;
+                                SFX.Text(e.s, 300,200, 7,0,'#ff0', 600);
+
+                                SFX.Text(e.ns, x,260, 6,0,'#ff0', 600);
+                                x+=66;
+                                var b = Factory.Sheep(9);//C.col.sheep
+                                SFX.Polygon(x, 292, b[1][0].src, b[1][0].col, {x:1.2,y:1.2,z:1.2}, 0);
+                                x+=40;
+                                
+                                if(e.ex){
+                                    t*=e.ex;
+                                    SFX.Text('X '+e.ex, x,260, 6,0,'#ff0', 600);x+=100;
+        
+                                    SFX.Polygon(x, 292, assetstree2, 12, {x:.8,y:.8,z:.8}, 0);
+                                    x+=40;
+                                }
+                                t*=e.v;
+                                SFX.Text('X '+e.v+' = '+t, x,260, 6,0,'#ff0', 600);x+=40;
+                            }
+                            else{
+                                SFX.Text(e.s, 116,80, 5,0,'#ff0', 600);
+                            }
+                        }else{
+                            var a = Actors[this.plrselect];
+                            var h = Factory.Head(a.c, a.d);
+                            SFX.Polygon(48, 132, h.src, h.col, {x:2,y:2,z:4}, 0);
+                            SFX.Text(this.player.name, 116,50, 4,0,'#0dd', 700);
+                            SFX.Text(e.p.replace('{p}', this.player.name).replace('{n}', this.player.gen||'NO'), 116,80, 5,0,'#0ff', 700);
+                        }                        
                     }
+
 
                     SFX.Text(this.btn,280,560,4,0);
                 }
@@ -979,7 +1105,7 @@ this.player.action = 1;//C.DIR.DOWN;
                 var e = this.introEvents[this.introEvent];
                 SFX.Text(e.tx, e.x?e.x:200,240, e.s|4,1,PAL[e.c|0], 720);
 
-                if(this.mapId==1 && this.plays>2)
+                if(this.mapId==1 && this.plays>0)
                 {
                     SFX.Text(this.btn+" TO SKIP",280,560,4,0);
                 }

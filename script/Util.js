@@ -78,7 +78,7 @@ var GOUtil = {
         }
     },
     CanMove: function(p, b, vx, vy){
-        var clx = [1,4];
+        var clx = [1,4,10,11,12];
 
         if(clx.includes(MAP.Content( new Vector2(p.x - b + vx, p.y - b + vy)))) {//t left
             return false;

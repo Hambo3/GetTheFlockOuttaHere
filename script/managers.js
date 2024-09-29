@@ -1,7 +1,7 @@
 class MapManger{
 
     constructor(ctx){
-        this.tileset = [0,10,1,2,10 ,1,2,10,11,13];
+        this.tileset = [0,10,1,2,10 ,1,2,10,11,13,11,11,11];
         
         this.offset = new Vector2();
 
