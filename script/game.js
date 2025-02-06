@@ -4,6 +4,7 @@ class Game{
 
     constructor(mob)
     {
+        this.difficulty = 1;
         this.plays = 0;
         this.yval=0;
         this.mob = mob;
@@ -78,7 +79,8 @@ class Game{
         data.push(trow);
         
 
-        var dd = d<1500?10:60;
+        var density = [70,60,50];
+        var dd = d<1500?10: density[this.difficulty];
         for (let i = 0; i < dd; i++) {	
             var f = [
                 [0,0,7,7,7,7,0,0],
@@ -415,8 +417,9 @@ class Game{
                 this.M = 3;//C.MODE.WIN;
                 this.bg=0;   
                 var sp = this.O.Get([1]).filter(f=>f.follow);
+                var pts = [400,200,100];
                 sp.forEach((n, i) => {
-                    this.Score(200, n.pos);
+                    this.Score(pts[this.difficulty], n.pos);
                 });
             }
             else{
@@ -447,7 +450,8 @@ class Game{
         this.M = 7;//C.MODE.SIMP;
         this.bg = 0;
         if(l<0){
-            this.simpTxt = converations[l+2];
+
+            this.simpTxt = l==-2 && this.plays>0 ? altconversation[l+2]: converations[l+2];
             this.simpIx = 0;
         }
         else if(l==1){
@@ -605,6 +609,9 @@ class Game{
             ttt.push({t:4, p: this.bonusp, tx:bs.join()+' WAS ADDED.'});
         }
 
+        if(ttt.length == 0 && this.bonusp){
+            ttt.push({t:4, p: this.bonusp, tx:'CONTINUE'});
+        }
         this.Init(DEF.maps[this.mapId], this.mapId, r, ttt);
         MAP.offset = new Vector2(0,0);
         MAP.scale = 1.1; //??
@@ -806,17 +813,18 @@ if(Input.IsSingle('p') ) {
                     if(b.length && !b[0].target)b[0].target = {pos:b[0].pos.Clone().AddXY(250,0)};
                 }
                 if(Input.Space()){
-                    if(this.titlesct){
+                    
+                    if(this.titlesct==2){
                         this.titlesct = 0;
                         this.Start(1, 1);//C.MODE.GINTRO
                     }
                     else{
-                        this.titlesct = 1;
+                        this.titlesct ++;
                     }
                 }
             }  
 
-            if(this.titlesct){
+            if(this.titlesct==1){
                 if(Input.LeftS()){
                     this.plrselect=Util.Clamp(this.plrselect-1,0,ATH);
                 }
@@ -824,7 +832,14 @@ if(Input.IsSingle('p') ) {
                     this.plrselect=Util.Clamp(this.plrselect+1,0,ATH);
                 }
             }
-
+            if(this.titlesct==2){
+                if(Input.LeftS()){
+                    this.difficulty=Util.Clamp(this.difficulty+1,0,2);
+                }
+                else if(Input.RightS()){
+                    this.difficulty=Util.Clamp(this.difficulty-1,0,2);
+                }
+            }
         }
         //if(this.M == C.MODE.WON || this.M == C.MODE.LOST){
         if(this.M == 4 || this.M == 6){
@@ -837,7 +852,6 @@ if(Input.IsSingle('p') ) {
             if(this.bg < 1){
                 this.bg+=(0.4*dt);
             }
-            this.introEvents[this.introEvent].p;
             MAP.ScrollTo(this.introEvents[this.introEvent].p, 0.05);     
 
             if(!this.gameTimer.enabled){
@@ -1164,7 +1178,7 @@ this.player.action = 1;//C.DIR.DOWN;
 
             this.BG(1, 0.6, this.titlebgc);
             
-            if(this.titlesct){
+            if(this.titlesct==1){
                 var t = 6;
                 SFX.Text("PLAYER",300,60,t,1); 
                 SFX.Text("SELECT",300,120,t,1); 
@@ -1182,6 +1196,20 @@ this.player.action = 1;//C.DIR.DOWN;
                     SFX.Text("A S D / ARROWS                SPACE",200,504,3,0);                         
                 }
                 
+            }
+            else if(this.titlesct==2){
+                var hero = ["    REAL HERO  ","       HERO     ", "REGULAR GUY/GAL"];
+                SFX.Text(hero[this.difficulty],180,60,6,1); 
+                var p = Actors[this.plrselect];
+                var b = Factory.Man(p.c, p.d);
+                SFX.Polygon(400, 260, b[1][0].src, b[1][0].col, {x:2,y:2,z:3.0}, 0);
+                SFX.Text(p.n,380,120,2,0);
+
+                SFX.Text("LEFT",200,310,4,0);
+                SFX.Text("RIGHT",520,310,4,0);
+                var lvls = ["HEROIC", "NORMAL", "EASY"];
+                
+                SFX.Text(lvls[this.difficulty],350,310,5,0);
             }
             else{
                 var d = MAP.ScreenBounds();        

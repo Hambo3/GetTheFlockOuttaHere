@@ -84,6 +84,12 @@ function FixedLoop(){
 		GAME.Pause();
 	}
 
+	// if(Input.IsDown('x','X') ) {
+	// 	MAP.Zoom(0.01);
+	// }
+	// else if(Input.IsDown('z','Z') ) {
+	// 	MAP.Zoom(-0.01);	
+	// }
 	now = timestamp();
 	dt = dt + Math.min(1, (now - lastTime) / 1000);
 	while (dt > sStep) {

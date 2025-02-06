@@ -39,17 +39,27 @@
     //}
 //}
 
+var altconversation = [
+    [
+    {s:'PLEASE HELP'},
+    {s:'MY SHEEP HAVE ESCAPED AND NEED RETURNING TO THEIR PEN'},
+    {p:'YEAH YEAH YEAH, I KNOW IM GOING ALREADY'}
+    ]
+];
 var converations = [
 
     [
         {s:'PLEASE HELP'},
         {s:'MY SHEEP HAVE ESCAPED AND NEED RETURNING TO THEIR PEN'},
         {p:'DONT TELL ME, THERES 13 OF THEM RIGHT?'},
-        {s:'THATS RIGHT, AND ITS BAD LUCK TO HAVE 13 SHEEP ON THE LOOSE'},
-        {p:'THATS A STRETCH BUT OK, ILL DO IT'}
+        {s:'NO!'},
+        {p:'OH OK?'},
+        {p:'ILL GET THEM FOR YOU ANYWAY'},
+        {p:'AND CAN I SKIP THE TEXT?'},
+        {s:'JUST PLAY IT ONCE THEN GET READY WITH ACTION BUTTON'}
     ],
     [   
-        {s:'HI MY NAME IS JANE, WHAT ARE YOUR PRONOUNS?'},
+        {s:'HI MY NAME IS JUNIPER, WHAT ARE YOUR PRONOUNS?'},
         {p:'HI, MY NAME IS {p} AND I HAVE {n} PRONOUNS'},
         {s:'THATS GREAT, THANK YOU FOR THAT'},        
         {s:'AND MY PRONOUNS ARE THEY/THEM'},
@@ -58,8 +68,8 @@ var converations = [
         {s:'THATS SO AWESOME'},
         {s:'AND I GIVE CONSENT FOR YOU TO HELP ME'},
         {p:'FANTASTIC, NOW HOW CAN I HELP'},
-        {s:'WELL, MY CAT IS STUCK IN THIS...'},
-        {s:'OH WAIT, HES GOT DOWN NOW BY HIMSELF'},
+        {s:'WELL, MY HAT FELL IN THE WATER AND...'},
+        {s:'OH WAIT, ITS SUNK TO THE BOTTOM NOW.'},
         {p:'BYE'}
     ],
     [
@@ -272,7 +282,7 @@ var Actors = [
         call:["HEY"]
     },
     {
-        n:"JASMINE",
+        n:"JUNIPER",
         c:[0,1,1,2,0,0],
         d:{l:1,f:1,h:1,b:0,m:2,w:2,t:0},
         call:["HI"]
@@ -329,7 +339,7 @@ var Factory={
         l.push({a:'FIN', b:'',y:700}, 
             {a:'THANKS FOR PLAYING', b:'',y:1100},
             {a:'TONY WILL RETURN IN', b:'',y:1300},
-            {a:'SHEEP IN SPACE', b:'',y:1300},
+            {a:'PARP WITH THE WIND', b:'',y:1300},
            // {a:'REVIEWS', b:'',y:1500},
             // {a:"'IVE NEVER SEEN ANYTHING|LIKE IT'", b:'',y:1520},
             //  {a:'', b:'THE NORTHAMPTON|TRIBUNE',y:1520}
